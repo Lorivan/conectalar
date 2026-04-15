@@ -16,6 +16,7 @@ class Usuario(db.Model):
     unidade = db.Column(db.String(20), nullable=False)
     tipo = db.Column(db.String(20), default='morador')
     ocorrencias = db.relationship('Ocorrencia', backref='autor', lazy=True)
+    id = db.Column(db.Integer, primary_key=True)
 
 
 class Ocorrencia(db.Model):

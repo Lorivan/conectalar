@@ -4,7 +4,7 @@
 <div class="row mt-4">
     <div class="col-md-6">
         <h2>Painel de Ocorrências</h2>
-        <p class="text-muted">Acompanhe as demandas do Condomínio Casas Flamboyant.</p>
+        <p class="text-muted">Acompanhe as demandas do Condomínio.</p>
     </div>
 
     <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-start gap-2 flex-wrap">
@@ -16,7 +16,7 @@
         <a href="/usuarios" class="btn btn-link text-dark text-nowrap">Ver Lista de Moradores</a>
         {% endif %}
 
-        <a href="/nova-ocorrencia" class="btn btn-primary text-nowrap">+ Nova Ocorrência</a>
+        <a href="/nova-ocorrencia" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
         <a href="/logout" class="btn btn-danger text-nowrap">Sair</a>
     </div>
 </div>
@@ -53,7 +53,7 @@
                                     {{ ocorrencia.status }}
                                 </span>
                     </td>
-                    <td>Usuário ID: {{ ocorrencia.usuario_id }}</td>
+                    <td>Usuário Nome: {{ ocorrencia.autor.nome }}</td>
 
                     {% if session.get('usuario_tipo') == 'sindico' %}
                     <td class="text-center">
