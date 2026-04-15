@@ -8,15 +8,20 @@
 </head>
 <body class="bg-light">
 
-    <nav class="navbar navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">🏢 ConectaLar - Plataforma para Gestão de Condominio</a>
-        </div>
-    </nav>
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/dashboard">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="40" class="me-2">
 
-    <div class="container mt-5">
-        {% block content %}{% endblock %}
+            <span class="fw-bold text-white">ConectaLar</span>
+            <span class="fs-6 text-white d-none d-md-inline ms-1 pt-1">- Plataforma para Gestão de Condomínio</span>
+        </a>
     </div>
+</nav>
+
+<div class="container mt-5">
+    {% block content %}{% endblock %}
+</div>
 
 </body>
 </html>

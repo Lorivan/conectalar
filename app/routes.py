@@ -90,6 +90,16 @@ def cadastro():
 
     return render_template('cadastro.html')
 
+
+@app.route('/usuarios')
+def lista_usuarios():
+    # Proteção: Apenas síndicos vêem a lista de moradores
+    if session.get('usuario_tipo') != 'sindico':
+        return "Acesso negado.", 403
+
+    todos_usuarios = Usuario.query.order_by(Usuario.nome).all()
+    return render_template('usuarios.html', usuarios=todos_usuarios)
+
 @app.route('/logout')
 def logout():
     session.clear()  # Limpa tudo ao sair

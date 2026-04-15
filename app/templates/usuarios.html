@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-8">
+        <h2>Gestão de Moradores</h2>
+        <p class="text-muted">Lista de todos os usuários cadastrados no sistema.</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="/cadastro" class="btn btn-dark">+ Novo Morador</a>
+        <a href="/dashboard" class="btn btn-outline-secondary ms-2">Voltar</a>
+    </div>
+</div>
+
+<hr>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail (Login)</th>
+                    <th>Unidade</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.unidade }}</td>
+                    <td>
+                        <span class="badge {{ 'bg-dark' if usuario.tipo == 'sindico' else 'bg-secondary' }}">
+                            {{ usuario.tipo.capitalize() }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
