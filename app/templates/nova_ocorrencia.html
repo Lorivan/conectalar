@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Registrar Nova Ocorrência</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="">
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título da Ocorrência (Ex: Lâmpada Queimada, Barulho)</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="descricao" class="form-label">Descrição Detalhada</label>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="4" required placeholder="Descreva o problema com o máximo de detalhes..."></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="/dashboard" class="btn btn-outline-secondary">Cancelar e Voltar</a>
+                        <button type="submit" class="btn btn-success">Salvar Reclamação</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
