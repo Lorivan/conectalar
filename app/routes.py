@@ -70,7 +70,25 @@ def atualizar_status(id, novo_status):
         db.session.commit()
 
     return redirect(url_for('dashboard'))
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
+    # Proteção: Apenas síndicos cadastram novos usuários
+    if session.get('usuario_tipo') != 'sindico':
+        return "Acesso negado: Apenas a administração pode cadastrar usuários.", 403
 
+    if request.method == 'POST':
+        novo_u = Usuario(
+            nome=request.form.get('nome'),
+            email=request.form.get('email'),
+            senha=request.form.get('senha'),
+            unidade=request.form.get('unidade'),
+            tipo=request.form.get('tipo')
+        )
+        db.session.add(novo_u)
+        db.session.commit()
+        return redirect(url_for('dashboard'))
+
+    return render_template('cadastro.html')
 
 @app.route('/logout')
 def logout():
