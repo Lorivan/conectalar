@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, session
 from app import app, db
 from app.models import Usuario, Ocorrencia
+from sqlalchemy import case
 
 app.secret_key = 'chave_secreta_conectalar'
 
@@ -29,8 +30,16 @@ def dashboard():
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
 
-    # Busca todas as ocorrências
-    todas_ocorrencias = Ocorrencia.query.order_by(Ocorrencia.data_criacao.desc()).all()
+    # Cria a regra de prioridade de exibição
+    ordem_status = case(
+        (Ocorrencia.status == 'Pendente', 1),
+        (Ocorrencia.status == 'Em Andamento', 2),
+        (Ocorrencia.status == 'Resolvido', 3),
+        else_=4
+    )
+
+    # Aplica a ordenação: 1º por Status, 2º pelos mais recentes (ID decrescente)
+    todas_ocorrencias = Ocorrencia.query.order_by(ordem_status, Ocorrencia.id.desc()).all()
 
     return render_template('dashboard.html', ocorrencias=todas_ocorrencias)
 
