@@ -2,8 +2,9 @@ from flask import render_template, request, redirect, url_for, session
 from app import app, db
 from app.models import Usuario, Ocorrencia
 from sqlalchemy import case
+import bcrypt
 
-app.secret_key = 'chave_secreta_conectalar'
+app.secret_key = '4b6b622fccd27f2214981db9c0095e867ac98420ccff5dcf40d1e1b3cc98b4ab'
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -13,14 +14,18 @@ def login():
         senha_digitada = request.form.get('senha')
 
         usuario = Usuario.query.filter_by(email=email_digitado).first()
-
-        if usuario and usuario.senha == senha_digitada:
+        if usuario:
+            print("Senha no banco:", usuario.senha)
+        if usuario and bcrypt.checkpw(
+            senha_digitada.encode('utf-8'),
+            usuario.senha.encode('utf-8')
+        ):
             session['usuario_id'] = usuario.id
             session['usuario_nome'] = usuario.nome
-            session['usuario_tipo'] = usuario.tipo  # <-- NOVO: Guarda se é síndico ou morador
+            session['usuario_tipo'] = usuario.tipo
             return redirect(url_for('dashboard'))
         else:
-            return "<h1>E-mail ou senha incorretos! Volte e tente novamente.</h1>"
+            return "<h1>E-mail ou senha incorretos!</h1>"
 
     return render_template('login.html')
 
@@ -79,20 +84,29 @@ def atualizar_status(id, novo_status):
         db.session.commit()
 
     return redirect(url_for('dashboard'))
+import bcrypt
+
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
-    # Proteção: Apenas síndicos cadastram novos usuários
     if session.get('usuario_tipo') != 'sindico':
         return "Acesso negado: Apenas a administração pode cadastrar usuários.", 403
 
     if request.method == 'POST':
+        senha_plana = request.form.get('senha')
+
+        hash_senha = bcrypt.hashpw(
+            senha_plana.encode('utf-8'),
+            bcrypt.gensalt()
+        )
+
         novo_u = Usuario(
             nome=request.form.get('nome'),
             email=request.form.get('email'),
-            senha=request.form.get('senha'),
+            senha=hash_senha.decode('utf-8'),
             unidade=request.form.get('unidade'),
             tipo=request.form.get('tipo')
         )
+
         db.session.add(novo_u)
         db.session.commit()
         return redirect(url_for('dashboard'))
