@@ -35,7 +35,10 @@ def dashboard():
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
 
-    # Cria a regra de prioridade de exibição
+    # 👇 pega o filtro da URL
+    filtro_status = request.args.get('status')
+
+    # regra de ordenação
     ordem_status = case(
         (Ocorrencia.status == 'Pendente', 1),
         (Ocorrencia.status == 'Em Andamento', 2),
@@ -43,12 +46,20 @@ def dashboard():
         else_=4
     )
 
-    # Aplica a ordenação: 1º por Status, 2º pelos mais recentes (ID decrescente)
-    todas_ocorrencias = Ocorrencia.query.order_by(ordem_status, Ocorrencia.id.desc()).all()
+    # começa a query
+    query = Ocorrencia.query
+
+    # aplica filtro se existir
+    if filtro_status:
+        query = query.filter(Ocorrencia.status == filtro_status)
+
+    # mantém sua ordenação original
+    todas_ocorrencias = query.order_by(
+        ordem_status,
+        Ocorrencia.id.desc()
+    ).all()
 
     return render_template('dashboard.html', ocorrencias=todas_ocorrencias)
-
-
 @app.route('/nova-ocorrencia', methods=['GET', 'POST'])
 def nova_ocorrencia():
     if 'usuario_id' not in session:

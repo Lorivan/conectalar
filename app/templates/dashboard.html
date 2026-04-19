@@ -24,6 +24,24 @@
 </div>
 
 <hr>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="GET" action="{{ url_for('dashboard') }}" class="d-flex gap-2">
+
+            <select name="status" class="form-select">
+                <option value="">Todos</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Resolvido">Resolvido</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Limpar</a>
+
+        </form>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
