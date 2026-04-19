@@ -1,63 +1,109 @@
 # 🏢 ConectaLar - Sistema de Gestão Condominial
 
-Bem-vindo ao repositório do **ConectaLar**! Este é um MVP (Produto Mínimo Viável) desenvolvido como projeto de extensão para a disciplina de Programação Web Aplicada da UniEvangélica.
+Bem-vindo ao **ConectaLar**!  
+Este projeto é um MVP (Produto Mínimo Viável) desenvolvido como atividade de extensão para a disciplina de Programação Web Aplicada da UniEvangélica.
 
-O sistema digitaliza e centraliza o registro de ocorrências e reclamações dos moradores do **Condomínio Casas Flamboyant**.
+O sistema tem como objetivo **digitalizar e centralizar o registro de ocorrências** dos moradores do **Condomínio Casas Flamboyant**, trazendo mais organização, transparência e eficiência na comunicação com a administração.
+
+---
+
+## 🚀 Funcionalidades
+
+### 🔐 Autenticação
+- Login de usuários
+- Senhas criptografadas com **bcrypt**
+- Controle de sessão
+
+### 👥 Gestão de Usuários
+- Cadastro de moradores (apenas síndico)
+- Listagem de usuários
+- Controle de acesso por perfil (síndico/morador)
+
+### 📋 Ocorrências
+- Registro de ocorrências
+- Visualização em painel
+- Controle de status:
+  - Pendente
+  - Em Andamento
+  - Resolvido
+
+### 📊 Dashboard
+- Ordenação por prioridade de status
+- Filtro por status
+- Cards com contadores (KPIs)
+- Interface responsiva com Bootstrap
+
+---
 
 ## 🛠 Tecnologias Utilizadas
-* **Back-end:** Python 3.x, Flask
-* **Banco de Dados:** PostgreSQL, SQLAlchemy
-* **Front-end:** HTML5, CSS3, Bootstrap 5
 
-## ⚙️ Como rodar o projeto na sua máquina (Para Devs)
+- **Back-end:** Python 3.x, Flask  
+- **Banco de Dados:** PostgreSQL, SQLAlchemy  
+- **Front-end:** HTML5, CSS3, Bootstrap 5  
+- **Segurança:** Bcrypt (hash de senhas)
+
+---
+
+## ⚙️ Como rodar o projeto
 
 ### 1. Pré-requisitos
-* Python 3.8+ instalado.
-* PostgreSQL instalado.
+- Python 3.8+
+- PostgreSQL instalado
 
-### 2. Configuração do Ambiente
-Abra o terminal na pasta do projeto e execute:
+---
+
+### 2. Configuração do ambiente
+
+No terminal, dentro da pasta do projeto:
+
 ```bash
-# Criar e ativar ambiente virtual
+# Criar ambiente virtual
 python -m venv venv
+
+# Ativar ambiente (Windows)
 venv\Scripts\activate
 
-# Instalar bibliotecas
+# Instalar dependências
 pip install -r requirements.txt
-3. Banco de Dados
-Crie um banco no PostgreSQL chamado conecta.
+3. Configuração do banco de dados
 
-Crie um ficheiro .env na raiz com:
+Crie um banco no PostgreSQL com o nome:
 
-Snippet de código
+conecta
+
+Crie um arquivo .env na raiz do projeto:
+
 DB_USER=postgres
 DB_PASSWORD=SUA_SENHA_AQUI
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=conecta
-SECRET_KEY=conectalar
+SECRET_KEY=uma_chave_segura_aqui
 4. Execução
-Bash
 # Rodar o sistema
 python run.py
 
-# Criar usuário inicial (Admin)
+# Criar usuário inicial (admin)
 python criar_usuario.py
-Acesse: http://127.0.0.1:5000/
 
+Acesse no navegador:
+
+http://127.0.0.1:5000/
+🔐 Usuário padrão
+Email: admin@conectalar.com
+Senha: 123
+📈 Próximas melhorias
+Filtro por data
+Busca por palavra-chave
+Paginação
+Dashboard com gráficos
+Notificações
+API REST
 👥 Equipe
 Lorivan Lino de Abreu
-
 Rafael Fortunato Rodrigues De Aquino
-
 Stephanie Wolff Silva
-
 Vinicius Maciel Azevedo
+📌 Observações
 
-
-3. Guarda o ficheiro (**Ctrl + S**).
-4. No terminal do PyCharm, envia a atualização para o GitHub:
-```bash
-git add README.md
-git commit -m "Doc: Adicionando instruções de instalação"
-git push origin main
+Este projeto foi desenvolvido com foco em aprendizado prático e aplicação real de conceitos de desenvolvimento web, evoluindo de um MVP para uma base sólida de sistema.
