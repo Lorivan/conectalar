@@ -90,6 +90,42 @@
         </tr>
         {% endfor %}
         </tbody>
+        <div class="row mb-3 text-center">
+
+    <div class="col">
+        <a href="/dashboard?status=Pendente" class="text-decoration-none">
+            <div class="card border-warning shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Pendentes</h6>
+                    <h4>{{ contagem['Pendente'] }}</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a href="/dashboard?status=Em Andamento" class="text-decoration-none">
+            <div class="card border-info shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Em Andamento</h6>
+                    <h4>{{ contagem['Em Andamento'] }}</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a href="/dashboard?status=Resolvido" class="text-decoration-none">
+            <div class="card border-success shadow-sm">
+                <div class="card-body">
+                    <h6 class="text-muted">Resolvidos</h6>
+                    <h4>{{ contagem['Resolvido'] }}</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
     </table>
 </div>
         </div>

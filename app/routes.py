@@ -45,7 +45,21 @@ def dashboard():
         (Ocorrencia.status == 'Resolvido', 3),
         else_=4
     )
+    from sqlalchemy import func
 
+    contadores = db.session.query(
+        Ocorrencia.status,
+        func.count(Ocorrencia.id)
+    ).group_by(Ocorrencia.status).all()
+
+    contagem = {
+        'Pendente': 0,
+        'Em Andamento': 0,
+        'Resolvido': 0
+    }
+
+    for status, total in contadores:
+        contagem[status] = total
     # começa a query
     query = Ocorrencia.query
 
@@ -59,7 +73,9 @@ def dashboard():
         Ocorrencia.id.desc()
     ).all()
 
-    return render_template('dashboard.html', ocorrencias=todas_ocorrencias)
+    return render_template('dashboard.html',
+                           ocorrencias=todas_ocorrencias,
+                            contagem=contagem)
 @app.route('/nova-ocorrencia', methods=['GET', 'POST'])
 def nova_ocorrencia():
     if 'usuario_id' not in session:
