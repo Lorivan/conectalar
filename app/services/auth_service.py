@@ -1,24 +1,9 @@
-from functools import wraps
-from flask import redirect, session, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-def login_obrigatorio(view_func):
-    @wraps(view_func)
-    def wrapper(*args, **kwargs):
-        if 'usuario_id' not in session:
-            return redirect(url_for('auth.login'))
-
-        return view_func(*args, **kwargs)
-
-    return wrapper
+def gerar_hash_senha(senha):
+    return generate_password_hash(senha)
 
 
-def sindico_obrigatorio(view_func):
-    @wraps(view_func)
-    def wrapper(*args, **kwargs):
-        if session.get('usuario_tipo') != 'sindico':
-            return redirect(url_for('dashboard.dashboard'))
-
-        return view_func(*args, **kwargs)
-
-    return wrapper
+def verificar_senha(senha_digitada, senha_hash):
+    return check_password_hash(senha_hash, senha_digitada)
