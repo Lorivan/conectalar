@@ -18,7 +18,7 @@
                         <textarea class="form-control" id="descricao" name="descricao" rows="4" required placeholder="Descreva o problema com o máximo de detalhes..."></textarea>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a href="/dashboard" class="btn btn-outline-secondary">Cancelar e Voltar</a>
+                        <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-outline-secondary">Cancelar e Voltar</a>
                         <button type="submit" class="btn btn-success">Salvar Reclamação</button>
                     </div>
                 </form>
