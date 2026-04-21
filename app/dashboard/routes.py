@@ -38,4 +38,6 @@ def dashboard():
     return render_template(
         'dashboard.html',
         ocorrencias=todas_ocorrencias,
- main
+
+        contagem=contagem
+    )

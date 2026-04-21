@@ -4,6 +4,7 @@ from app.models import Usuario
 from app.services.auth_service import verificar_senha
 
 auth_bp = Blueprint('auth', __name__)
+
 @auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
