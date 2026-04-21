@@ -19,6 +19,7 @@ def nova_ocorrencia():
 
         db.session.add(nova)
         db.session.commit()
+
         return redirect(url_for('dashboard.dashboard'))
 
     return render_template('nova_ocorrencia.html')
@@ -28,6 +29,7 @@ def nova_ocorrencia():
 @sindico_obrigatorio
 def atualizar_status(id, novo_status):
     ocorrencia = Ocorrencia.query.get(id)
+
     if ocorrencia and novo_status in ['Pendente', 'Em Andamento', 'Resolvido']:
         ocorrencia.status = novo_status
         db.session.commit()
