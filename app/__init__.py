@@ -12,7 +12,6 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-
     database_url = os.getenv('DATABASE_URL')
     if database_url:
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
@@ -47,5 +46,4 @@ def create_app():
 
 app = create_app()
 
-app = create_app()
 

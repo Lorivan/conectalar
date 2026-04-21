@@ -1,19 +1,24 @@
-import bcrypt
+from functools import wraps
+from flask import redirect, session, url_for
 
 
-def verificar_senha(senha_plana: str, hash_senha: str) -> bool:
-    if not senha_plana or not hash_senha:
-        return False
+def login_obrigatorio(view_func):
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if 'usuario_id' not in session:
+            return redirect(url_for('auth.login'))
 
-    return bcrypt.checkpw(
-        senha_plana.encode('utf-8'),
-        hash_senha.encode('utf-8')
-    )
+        return view_func(*args, **kwargs)
+
+    return wrapper
 
 
-def gerar_hash_senha(senha_plana: str) -> str:
-    hash_senha = bcrypt.hashpw(
-        senha_plana.encode('utf-8'),
-        bcrypt.gensalt()
-    )
-    return hash_senha.decode('utf-8')
+def sindico_obrigatorio(view_func):
+    @wraps(view_func)
+    def wrapper(*args, **kwargs):
+        if session.get('usuario_tipo') != 'sindico':
+            return redirect(url_for('dashboard.dashboard'))
+
+        return view_func(*args, **kwargs)
+
+    return wrapper
