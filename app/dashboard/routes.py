@@ -5,10 +5,10 @@ from app import db
 from app.models import Ocorrencia
 from app.utils.auth import login_obrigatorio
 
-dashboard_bp = Blueprint('dashboard_bp', __name__)
+dashboard_bp = Blueprint('dashboard', __name__)
 
 
-@dashboard_bp.route('/dashboard', endpoint='dashboard')
+@dashboard_bp.route('/dashboard')
 @login_obrigatorio
 def dashboard():
     filtro_status = request.args.get('status')
