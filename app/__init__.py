@@ -1,22 +1,44 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
 
-# pega do ambiente (Render) ou usa local
-database_url = os.getenv("DATABASE_URL")
+from config import Config
 
-if database_url:
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-else:
-    from config import Config
+db = SQLAlchemy()
+
+
+def create_app():
+    app = Flask(__name__)
     app.config.from_object(Config)
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    database_url = os.getenv('DATABASE_URL')
+    if database_url:
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
-db = SQLAlchemy(app)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-from app import routes, models
-with app.app_context():
-    db.create_all()
+    db.init_app(app)
+
+    from app.auth import auth_bp
+    from app.dashboard import dashboard_bp
+    from app.ocorrencias import ocorrencias_bp
+    from app.usuarios import usuarios_bp
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(dashboard_bp)
+    app.register_blueprint(ocorrencias_bp)
+    app.register_blueprint(usuarios_bp)
+
+    # Evita derrubar a aplicação caso o banco esteja indisponível no boot.
+    with app.app_context():
+        try:
+            db.create_all()
+        except SQLAlchemyError as exc:
+            app.logger.error('Falha ao executar db.create_all() no startup: %s', exc)
+
+    return app
+
+
+app = create_app()
