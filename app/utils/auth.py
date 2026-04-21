@@ -10,7 +10,11 @@ def login_obrigatorio(view_func):
 
             return redirect(url_for('auth.login'))
 
+
+            return redirect(url_for('auth.login'))
+
 return redirect(url_for('auth.login'))
+
 
         return view_func(*args, **kwargs)
 

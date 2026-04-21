@@ -19,7 +19,6 @@ def nova_ocorrencia():
 
         db.session.add(nova)
         db.session.commit()
-
         return redirect(url_for('dashboard.dashboard'))
 
     return render_template('nova_ocorrencia.html')

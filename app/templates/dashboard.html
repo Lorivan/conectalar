@@ -8,8 +8,14 @@
             <p class="text-muted">Acompanhe as demandas do Condomínio.</p>
         </div>
 
+
         <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-start gap-2 flex-wrap">
             {% if session.get('usuario_tipo') == 'sindico' %}
+
+
+        <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-start gap-2 flex-wrap">
+            {% if session.get('usuario_tipo') == 'sindico' %}
+
 
                 <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
                 <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta text-nowrap">Ver Lista de Moradores</a>
@@ -17,6 +23,7 @@
 
             <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
             <a href="{{ url_for('auth.logout') }}" class="btn btn-danger text-nowrap">Sair</a>
+
 
 {% if session.get('usuario_tipo') == 'sindico' %}
     <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
@@ -51,6 +58,7 @@
 <div class="row mb-3 text-center">
     <div class="col">
         <a href="{{ url_for('dashboard.dashboard', status='Pendente') }}" class="text-decoration-none">
+
 {% if session.get('usuario_tipo') == 'sindico' %}
     <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
     <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta text-nowrap">Ver Lista de Moradores</a>
@@ -58,6 +66,7 @@
 
 <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
 <a href="{{ url_for('auth.logout') }}" class="btn btn-danger text-nowrap">Sair</a>
+
             <div class="card border-warning shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Pendentes</h6>
@@ -69,6 +78,7 @@
 
     <div class="col">
         <a href="{{ url_for('dashboard.dashboard', status='Em Andamento') }}" class="text-decoration-none">
+
 {% if session.get('usuario_tipo') == 'sindico' %}
     <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
     <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta text-nowrap">Ver Lista de Moradores</a>
@@ -76,6 +86,7 @@
 
 <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
 <a href="{{ url_for('auth.logout') }}" class="btn btn-danger text-nowrap">Sair</a>
+
             <div class="card border-info shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Em Andamento</h6>
@@ -88,6 +99,9 @@
     <div class="col">
 
         <a href="{{ url_for('dashboard.dashboard', status='Resolvido') }}" class="text-decoration-none">
+
+
+        <a href="{{ url_for('dashboard.dashboard', status='Resolvido') }}" class="text-decoration-none">
 {% if session.get('usuario_tipo') == 'sindico' %}
     <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
     <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta text-nowrap">Ver Lista de Moradores</a>
@@ -95,6 +109,7 @@
 
 <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
 <a href="{{ url_for('auth.logout') }}" class="btn btn-danger text-nowrap">Sair</a>
+
             <div class="card border-success shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Resolvidos</h6>
@@ -142,6 +157,7 @@
                                     {% elif ocorrencia.status == 'Em Andamento' %}
                                         <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Resolvido') }}" class="btn btn-sm btn-success">✓ Resolver</a>
 
+
 {% if session.get('usuario_tipo') == 'sindico' %}
     <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
     <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta text-nowrap">Ver Lista de Moradores</a>
@@ -149,6 +165,7 @@
 
 <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
 <a href="{{ url_for('auth.logout') }}" class="btn btn-danger text-nowrap">Sair</a>
+
                                     {% else %}
                                         <span class="text-muted"><small>Finalizado</small></span>
                                     {% endif %}
