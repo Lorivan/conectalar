@@ -5,7 +5,6 @@ from app.services.auth_service import verificar_senha
 
 auth_bp = Blueprint('auth', __name__)
 
-
 @auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -17,6 +16,7 @@ def login():
             session['usuario_id'] = usuario.id
             session['usuario_nome'] = usuario.nome
             session['usuario_tipo'] = usuario.tipo
+
             return redirect(url_for('dashboard.dashboard'))
 
         flash('E-mail ou senha incorretos.', 'danger')

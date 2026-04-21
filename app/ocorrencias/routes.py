@@ -28,6 +28,7 @@ def nova_ocorrencia():
 @sindico_obrigatorio
 def atualizar_status(id, novo_status):
     ocorrencia = Ocorrencia.query.get(id)
+
     if ocorrencia and novo_status in ['Pendente', 'Em Andamento', 'Resolvido']:
         ocorrencia.status = novo_status
         db.session.commit()
