@@ -1,5 +1,6 @@
-from app import db
 from datetime import datetime, timedelta
+
+from app import db
 
 
 # Função que pega a hora global e diminui 3 horas (Fuso de Brasília)
@@ -9,6 +10,7 @@ def hora_brasilia():
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'
+
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -16,17 +18,14 @@ class Usuario(db.Model):
     unidade = db.Column(db.String(20), nullable=False)
     tipo = db.Column(db.String(20), default='morador')
     ocorrencias = db.relationship('Ocorrencia', backref='autor', lazy=True)
-    id = db.Column(db.Integer, primary_key=True)
 
 
 class Ocorrencia(db.Model):
     __tablename__ = 'ocorrencias'
+
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(100), nullable=False)
     descricao = db.Column(db.Text, nullable=False)
-
-    # AQUI ESTÁ A CORREÇÃO: Agora ele chama a função hora_brasilia
     data_criacao = db.Column(db.DateTime, default=hora_brasilia)
-
     status = db.Column(db.String(20), default='Pendente')
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
