@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
 
 from config import Config
 
@@ -30,8 +31,12 @@ def create_app():
     app.register_blueprint(ocorrencias_bp)
     app.register_blueprint(usuarios_bp)
 
+    # Protege o startup da aplicação
     with app.app_context():
-        db.create_all()
+        try:
+            db.create_all()
+        except SQLAlchemyError as exc:
+            app.logger.error('Falha ao executar db.create_all(): %s', exc)
 
     return app
 
