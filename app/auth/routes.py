@@ -17,7 +17,7 @@ def login():
             session['usuario_id'] = usuario.id
             session['usuario_nome'] = usuario.nome
             session['usuario_tipo'] = usuario.tipo
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard.dashboard'))
 
         flash('E-mail ou senha incorretos.', 'danger')
 

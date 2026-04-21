@@ -22,7 +22,7 @@ def cadastro():
 
         db.session.add(novo_u)
         db.session.commit()
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard.dashboard'))
 
     return render_template('cadastro.html')
 

@@ -19,7 +19,7 @@ def nova_ocorrencia():
 
         db.session.add(nova)
         db.session.commit()
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard.dashboard'))
 
     return render_template('nova_ocorrencia.html')
 
@@ -32,4 +32,4 @@ def atualizar_status(id, novo_status):
         ocorrencia.status = novo_status
         db.session.commit()
 
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('dashboard.dashboard'))
