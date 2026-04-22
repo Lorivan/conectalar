@@ -8,74 +8,88 @@
             <p class="text-muted">Acompanhe as demandas do Condomínio.</p>
         </div>
 
-        <div class="col-md-6 d-flex justify-content-md-end align-items-center gap-2 flex-wrap">
+        <div class="col-md-6 d-flex justify-content-md-end justify-content-start align-items-start gap-2 flex-wrap">
             {% if session.get('usuario_tipo') == 'sindico' %}
-                <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta">+ Novo Morador</a>
-                <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta">Ver Moradores</a>
+                <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
+                <a href="{{ url_for('usuarios.lista_usuarios') }}" class="btn btn-roxo-conecta text-nowrap">Ver Lista de Moradores</a>
             {% endif %}
 
-            <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta">+ Nova Ocorrência</a>
-            <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Sair</a>
+            <a href="{{ url_for('ocorrencias.nova_ocorrencia') }}" class="btn btn-roxo-conecta text-nowrap">+ Nova Ocorrência</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-danger text-nowrap">Sair</a>
         </div>
     </div>
+</div>
 
-    <hr>
+<hr>
 
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <form method="GET" action="{{ url_for('dashboard.dashboard') }}" class="d-flex gap-2">
-                <select name="status" class="form-select">
-                    <option value="">Todos</option>
-                    <option value="Pendente">Pendente</option>
-                    <option value="Em Andamento">Em Andamento</option>
-                    <option value="Resolvido">Resolvido</option>
-                </select>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="GET" action="{{ url_for('dashboard.dashboard') }}" class="d-flex gap-2">
+            <select name="status" class="form-select">
+                <option value="" {% if not filtro_status %}selected{% endif %}>Todos</option>
+                <option value="Pendente" {% if filtro_status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                <option value="Em Andamento" {% if filtro_status == 'Em Andamento' %}selected{% endif %}>Em Andamento</option>
+                <option value="Resolvido" {% if filtro_status == 'Resolvido' %}selected{% endif %}>Resolvido</option>
+            </select>
 
-                <button type="submit" class="btn btn-primary">Filtrar</button>
-                <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-secondary">Limpar</a>
-            </form>
-        </div>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-secondary">Limpar</a>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-3 text-center">
+    <div class="col">
+        <a href="{{ url_for('dashboard.dashboard') }}" class="text-decoration-none">
+            <div class="card shadow-sm {% if not filtro_status %}border-primary{% else %}border-secondary{% endif %}">
+                <div class="card-body">
+                    <h6 class="text-muted">Todos</h6>
+                    <h4>{{ total_ocorrencias }}</h4>
+                </div>
+            </div>
+        </a>
     </div>
 
-    <div class="row mb-3 text-center">
-        <div class="col">
-            <a href="{{ url_for('dashboard.dashboard', status='Pendente') }}" class="text-decoration-none">
-                <div class="card border-warning shadow-sm">
-                    <div class="card-body">
-                        <h6>Pendentes</h6>
-                        <h4>{{ contagem['Pendente'] }}</h4>
-                    </div>
+    <div class="col">
+        <a href="{{ url_for('dashboard.dashboard', status='Pendente') }}" class="text-decoration-none">
+            <div class="card border-warning shadow-sm {% if filtro_status == 'Pendente' %}border-3{% endif %}">
+                <div class="card-body">
+                    <h6 class="text-muted">Pendentes</h6>
+                    <h4>{{ contagem['Pendente'] }}</h4>
                 </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="{{ url_for('dashboard.dashboard', status='Em Andamento') }}" class="text-decoration-none">
-                <div class="card border-info shadow-sm">
-                    <div class="card-body">
-                        <h6>Em Andamento</h6>
-                        <h4>{{ contagem['Em Andamento'] }}</h4>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="{{ url_for('dashboard.dashboard', status='Resolvido') }}" class="text-decoration-none">
-                <div class="card border-success shadow-sm">
-                    <div class="card-body">
-                        <h6>Resolvidos</h6>
-                        <h4>{{ contagem['Resolvido'] }}</h4>
-                    </div>
-                </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
 
-    {% if ocorrencias %}
-        <div class="table-responsive border rounded shadow-sm bg-white">
-            <table class="table table-hover table-bordered align-middle">
-                <thead class="table-light">
+    <div class="col">
+        <a href="{{ url_for('dashboard.dashboard', status='Em Andamento') }}" class="text-decoration-none">
+            <div class="card border-info shadow-sm {% if filtro_status == 'Em Andamento' %}border-3{% endif %}">
+                <div class="card-body">
+                    <h6 class="text-muted">Em Andamento</h6>
+                    <h4>{{ contagem['Em Andamento'] }}</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col">
+        <a href="{{ url_for('dashboard.dashboard', status='Resolvido') }}" class="text-decoration-none">
+            <div class="card border-success shadow-sm {% if filtro_status == 'Resolvido' %}border-3{% endif %}">
+                <div class="card-body">
+                    <h6 class="text-muted">Resolvidos</h6>
+                    <h4>{{ contagem['Resolvido'] }}</h4>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {% if ocorrencias %}
+            <div class="table-responsive border rounded shadow-sm bg-white">
+                <table class="table table-hover table-bordered align-middle mb-0">
+                    <thead class="table-light">
                     <tr>
                         <th>ID</th>
                         <th>Data</th>
@@ -83,39 +97,44 @@
                         <th>Status</th>
                         <th>Autor</th>
                         {% if session.get('usuario_tipo') == 'sindico' %}
-                            <th>Ações</th>
+                            <th class="text-center">Ações (Administração)</th>
                         {% endif %}
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {% for ocorrencia in ocorrencias %}
                         <tr>
                             <td>#{{ ocorrencia.id }}</td>
                             <td>{{ ocorrencia.data_criacao.strftime('%d/%m/%Y') }}</td>
-                            <td>{{ ocorrencia.titulo }}</td>
-                            <td>{{ ocorrencia.status }}</td>
+                            <td><strong>{{ ocorrencia.titulo }}</strong><br><small class="text-muted">{{ ocorrencia.descricao }}</small></td>
+                            <td>
+                                <span class="badge {% if ocorrencia.status == 'Pendente' %}bg-warning text-dark{% elif ocorrencia.status == 'Resolvido' %}bg-success{% else %}bg-info{% endif %}">
+                                    {{ ocorrencia.status }}
+                                </span>
+                            </td>
                             <td>{{ ocorrencia.autor.nome }}</td>
 
                             {% if session.get('usuario_tipo') == 'sindico' %}
-                                <td>
+                                <td class="text-center">
                                     {% if ocorrencia.status == 'Pendente' %}
-                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Em Andamento') }}" class="btn btn-sm btn-info">Andamento</a>
+                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Em Andamento') }}" class="btn btn-sm btn-outline-info">Em Andamento</a>
                                     {% elif ocorrencia.status == 'Em Andamento' %}
-                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Resolvido') }}" class="btn btn-sm btn-success">Resolver</a>
+                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Resolvido') }}" class="btn btn-sm btn-success">✓ Resolver</a>
                                     {% else %}
-                                        <span class="text-muted">Finalizado</span>
+                                        <span class="text-muted"><small>Finalizado</small></span>
                                     {% endif %}
                                 </td>
                             {% endif %}
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <div class="alert alert-info text-center">
-            Nenhuma ocorrência registrada.
-        </div>
-    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                Nenhuma ocorrência registrada até o momento.
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

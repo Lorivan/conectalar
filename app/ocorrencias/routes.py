@@ -1,9 +1,9 @@
-from flask import Blueprint, redirect, render_template, request, session, url_for, flash
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from sqlalchemy.exc import SQLAlchemyError
 
 from app import db
 from app.models import Ocorrencia
 from app.utils.auth import login_obrigatorio, sindico_obrigatorio
-from sqlalchemy.exc import SQLAlchemyError
 
 ocorrencias_bp = Blueprint('ocorrencias', __name__)
 
@@ -35,7 +35,6 @@ def nova_ocorrencia():
 @sindico_obrigatorio
 def atualizar_status(id, novo_status):
     ocorrencia = Ocorrencia.query.get(id)
-
     if ocorrencia and novo_status in ['Pendente', 'Em Andamento', 'Resolvido']:
         try:
             ocorrencia.status = novo_status

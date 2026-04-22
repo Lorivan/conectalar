@@ -1,4 +1,5 @@
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from sqlalchemy.exc import SQLAlchemyError
 
 from app import db
 from app.models import Usuario
@@ -19,13 +20,16 @@ def cadastro():
             unidade=request.form.get('unidade'),
             tipo=request.form.get('tipo')
         )
-    try:
-        db.session.add(novo_u)
-        db.session.commit()
-        return redirect(url_for('dashboard.dashboard'))
-    except SQLAlchemyError:
-        db.session.rollback()
-        flash('Não foi possível cadastrar o usuário. Verifique os dados.', 'danger')
+
+        try:
+            db.session.add(novo_u)
+            db.session.commit()
+            flash('Usuário cadastrado com sucesso.', 'success')
+            return redirect(url_for('dashboard.dashboard'))
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Não foi possível cadastrar o usuário. Verifique os dados.', 'danger')
+
     return render_template('cadastro.html')
 
 

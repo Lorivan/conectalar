@@ -7,11 +7,15 @@ from app.utils.auth import login_obrigatorio
 
 dashboard_bp = Blueprint('dashboard', __name__)
 
+STATUS_VALIDOS = {'Pendente', 'Em Andamento', 'Resolvido'}
+
 
 @dashboard_bp.route('/dashboard')
 @login_obrigatorio
 def dashboard():
-    filtro_status = request.args.get('status')
+    filtro_status = request.args.get('status', '').strip()
+    if filtro_status not in STATUS_VALIDOS:
+        filtro_status = ''
 
     ordem_status = case(
         (Ocorrencia.status == 'Pendente', 1),
@@ -27,7 +31,8 @@ def dashboard():
 
     contagem = {'Pendente': 0, 'Em Andamento': 0, 'Resolvido': 0}
     for status, total in contadores:
-        contagem[status] = total
+        if status in contagem:
+            contagem[status] = total
 
     query = Ocorrencia.query
     if filtro_status:
@@ -38,6 +43,7 @@ def dashboard():
     return render_template(
         'dashboard.html',
         ocorrencias=todas_ocorrencias,
-
-        contagem=contagem
+        contagem=contagem,
+        total_ocorrencias=sum(contagem.values()),
+        filtro_status=filtro_status
     )

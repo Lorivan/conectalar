@@ -24,4 +24,13 @@ def create_app():
     app.register_blueprint(ocorrencias_bp)
     app.register_blueprint(usuarios_bp)
 
+    # Evita derrubar a aplicação caso o banco esteja indisponível no boot.
+    with app.app_context():
+        try:
+            db.create_all()
+        except SQLAlchemyError as exc:
+            app.logger.error('Falha ao executar db.create_all() no startup: %s', exc)
+
     return app
+
+app = create_app()

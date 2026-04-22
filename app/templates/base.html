@@ -1,25 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <style>
-    .text-roxo-conecta {
-        color: #7b5cfb !important;
-    }
-
-    .bg-roxo-conecta {
-        background-color: #7b5cfb !important;
-        color: white !important;
-    }
-
-    .btn-roxo-conecta {
-        background-color: #1E175B !important;
-        color: white !important;
-        border: none;
-    }
-
-    .btn-roxo-conecta:hover {
-        background-color: #6146cf !important;
-        color: white !important;
-    }
+    .text-roxo-conecta { color: #7b5cfb !important; }
+    .bg-roxo-conecta { background-color: #7b5cfb !important; color: white !important; }
+    .btn-roxo-conecta { background-color: #1E175B !important; color: white !important; border: none; }
+    .btn-roxo-conecta:hover { background-color: #6146cf !important; color: white !important; }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -33,7 +18,6 @@
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard.dashboard') }}">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="40" class="me-2">
-
             <span class="fw-bold text-white">ConectaLar</span>
             <span class="fs-6 text-white d-none d-md-inline ms-1 pt-1">- Plataforma para Gestão de Condomínio</span>
         </a>
