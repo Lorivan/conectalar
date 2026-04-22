@@ -1,8 +1,9 @@
-from flask import Blueprint, redirect, render_template, request, session, url_for
+from flask import Blueprint, redirect, render_template, request, session, url_for, flash
 
 from app import db
 from app.models import Ocorrencia
 from app.utils.auth import login_obrigatorio, sindico_obrigatorio
+from sqlalchemy.exc import SQLAlchemyError
 
 ocorrencias_bp = Blueprint('ocorrencias', __name__)
 
@@ -17,8 +18,14 @@ def nova_ocorrencia():
             usuario_id=session['usuario_id']
         )
 
-        db.session.add(nova)
-        db.session.commit()
+        try:
+            db.session.add(nova)
+            db.session.commit()
+            flash('Ocorrência registrada com sucesso.', 'success')
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Não foi possível registrar a ocorrência. Tente novamente.', 'danger')
+
         return redirect(url_for('dashboard.dashboard'))
 
     return render_template('nova_ocorrencia.html')
@@ -30,7 +37,12 @@ def atualizar_status(id, novo_status):
     ocorrencia = Ocorrencia.query.get(id)
 
     if ocorrencia and novo_status in ['Pendente', 'Em Andamento', 'Resolvido']:
-        ocorrencia.status = novo_status
-        db.session.commit()
+        try:
+            ocorrencia.status = novo_status
+            db.session.commit()
+            flash('Status atualizado com sucesso.', 'success')
+        except SQLAlchemyError:
+            db.session.rollback()
+            flash('Não foi possível atualizar o status. Tente novamente.', 'danger')
 
     return redirect(url_for('dashboard.dashboard'))
