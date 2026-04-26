@@ -38,7 +38,6 @@ def create_app():
             except SQLAlchemyError as exc:
                 app.logger.error('Falha ao executar db.create_all() no startup: %s', exc)
 
-
     @app.get('/healthz')
     def healthz():
         try:

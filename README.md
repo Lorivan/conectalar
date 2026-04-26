@@ -127,4 +127,3 @@ Para executar em produção com segurança:
 - Proteção CSRF habilitada para requisições mutáveis (`POST`, etc.)
 - Páginas de erro padronizadas para `400`, `403`, `404` e `500`
 
-
