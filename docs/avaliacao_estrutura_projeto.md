@@ -1,82 +1,173 @@
-# Avaliação da estrutura do projeto ConectaLar
+# Avaliação da estrutura atual do ConectaLar (branch atual)
 
-## Visão geral da estrutura atual
+## 1) Diagnóstico objetivo da estrutura
 
-O projeto está organizado de forma simples e funcional para um MVP Flask:
+Com base no código desta branch, o projeto já evoluiu além do MVP inicial e hoje possui:
 
-- `app/__init__.py`: inicialização da aplicação e banco.
-- `app/routes.py`: rotas HTTP e regras de acesso.
-- `app/models.py`: modelos SQLAlchemy.
-- `app/templates/`: páginas HTML.
-- `config.py`: configurações por variáveis de ambiente.
-- `run.py`: ponto de entrada da aplicação.
+- **Factory de aplicação Flask** (`create_app`) com registro de blueprints por domínio (`auth`, `dashboard`, `ocorrencias`, `usuarios`).
+- **Camadas iniciais separadas** para utilitários de autenticação (`app/utils/auth.py`) e serviços (`app/services/auth_service.py`).
+- **Modelagem simples e direta** com SQLAlchemy para `Usuario` e `Ocorrencia`.
+- **Frontend server-side** por templates Jinja2 (sem API REST pública).
 
-Essa estrutura é válida para começo de projeto, mas há sinais de crescimento que justificam modularização.
+### Estrutura atual (resumo)
 
-## Pontos positivos
+```text
+app/
+  __init__.py          # app factory, db.init, register blueprints, create_all
+  models.py            # entidades Usuario/Ocorrencia
+  auth/routes.py       # login/logout
+  dashboard/routes.py  # listagem e métricas de ocorrências
+  ocorrencias/routes.py# criação/atualização de status
+  usuarios/routes.py   # cadastro/listagem de usuários
+  services/auth_service.py
+  utils/auth.py
+  templates/
+config.py
+run.py
+docs/
+```
 
-1. **Separação básica por responsabilidade** (rotas, modelos, templates).
-2. **Uso de variáveis de ambiente** para dados sensíveis.
-3. **Controle de acesso por perfil** (`sindico` x `morador`).
-4. **Persistência relacional com SQLAlchemy**.
+## 2) Pontos fortes já presentes
 
-## Principais pontos de melhoria recomendados
+1. **Modularização por blueprint** já implantada, facilitando crescimento por domínio.
+2. **Fallback de banco em `config.py`** para SQLite local, útil para desenvolvimento rápido.
+3. **Tratamento básico de erros de banco** com rollback em rotas críticas.
+4. **Hash de senha com compatibilidade legada** no serviço de autenticação.
 
-### 1) Modularização por blueprints
-Concentrar todas as rotas em um único arquivo (`app/routes.py`) dificulta evolução e testes.
+## 3) Riscos e lacunas para robustez
 
-**Sugestão:** dividir em blueprints:
-- `app/auth/routes.py` (login/logout)
-- `app/ocorrencias/routes.py`
-- `app/usuarios/routes.py`
-- `app/dashboard/routes.py`
+### 3.1 Banco e ciclo de deploy
+- O uso de `db.create_all()` no startup reduz controle de evolução de schema.
+- Falta trilha de migração/versionamento de banco.
 
-### 2) Camada de serviços
-Hoje as regras de negócio estão nas rotas (ex.: autenticação, atualização de status, cadastro).
+**Impacto:** maior risco em produção, especialmente com múltiplos ambientes (dev/homolog/prod).
 
-**Sugestão:** criar `app/services/` para regras de domínio e manter rotas finas.
+### 3.2 Acoplamento Web + Regra de negócio
+- Ainda há regra de negócio dentro das rotas (validação de status, montagem de entidades, fluxos de autorização).
+- Não existe uma camada de casos de uso/serviços por domínio (além de auth).
 
-### 3) Camada de formulários e validação
-A coleta dos dados via `request.form.get(...)` sem validação estruturada tende a gerar inconsistências.
+**Impacto:** dificulta testes unitários e reaproveitamento para API mobile.
 
-**Sugestão:** usar Flask-WTF/Pydantic para validação de campos, tipos, tamanho e obrigatoriedade.
+### 3.3 Ausência de API para cliente mobile
+- O projeto está orientado a HTML renderizado no servidor.
+- Não há versionamento de API, serialização de resposta nem contrato público.
 
-### 4) Migrações de banco
-`db.create_all()` é útil em MVP, porém frágil para evolução controlada.
+**Impacto:** aplicativo mobile exigirá duplicação de regras ou criação urgente de backend API depois.
 
-**Sugestão:** adotar Flask-Migrate/Alembic para versionamento de schema.
+### 3.4 Segurança/observabilidade
+- Sessão baseada em cookie atende web, mas não é ideal como base para mobile.
+- Não há evidência de logs estruturados, rastreabilidade por request-id, nem monitoramento de erro.
 
-### 5) Estrutura de testes
-Não há suíte de testes no repositório.
+**Impacto:** operação e suporte escalam mal quando aumentar número de usuários.
 
-**Sugestão:** criar `tests/` com:
-- testes unitários de serviços
-- testes de integração de rotas críticas (login, autorização, criação de ocorrência)
+### 3.5 Qualidade e governança técnica
+- Não há pasta de testes automatizados versionada na branch.
+- Não há padrão de DTO/schema para entrada/saída de dados.
 
-### 6) Segurança e observabilidade
-Recomendável reforçar:
-- proteção CSRF em formulários
-- limites e validação de entradas
-- logging estruturado (trocar prints por logger)
-- tratamento de erro com páginas/handlers dedicados
+**Impacto:** regressão frequente e baixa previsibilidade de entrega.
 
-## Roadmap sugerido (incremental)
+## 4) Recomendações priorizadas para preparar Web + Mobile
 
-### Fase 1 (rápida)
-- Introduzir blueprints sem alterar regras de negócio.
-- Criar testes de fumaça (`/`, `/dashboard`, `/nova-ocorrencia`).
-- Configurar logger básico.
+## Prioridade 1 (fundação — curto prazo)
 
-### Fase 2 (estabilidade)
-- Extrair serviços de autenticação, usuário e ocorrência.
-- Adicionar Flask-Migrate.
-- Adicionar validações de formulário.
+1. **Adotar migrações com Flask-Migrate/Alembic**
+   - Remover dependência de `db.create_all()` para evolução de schema.
+   - Criar fluxo padrão: `flask db migrate` + `flask db upgrade`.
 
-### Fase 3 (escala)
-- Implementar API REST (se necessário para app mobile/painel externo).
-- Paginação, busca e filtros avançados.
-- Observabilidade (logs + métricas de erro).
+2. **Criar camada de aplicação (use cases/services por domínio)**
+   - `app/services/ocorrencias_service.py`
+   - `app/services/usuarios_service.py`
+   - Rotas ficam finas (somente HTTP e apresentação).
 
-## Resultado esperado
+3. **Adicionar suíte de testes mínima**
+   - Testes de autenticação, autorização e fluxo de ocorrência.
+   - Testes de serviço independentes de template.
 
-Com essas melhorias, o projeto evolui de MVP acadêmico para uma base mais sustentável para manutenção contínua, com mais segurança, testabilidade e facilidade para novas funcionalidades.
+4. **Introduzir validação de entrada padronizada**
+   - Flask-WTF para web forms.
+   - Marshmallow/Pydantic para payloads de API.
+
+## Prioridade 2 (habilitar mobile sem quebrar web)
+
+1. **Criar API versionada (`/api/v1`) em blueprints próprios**
+   - Ex.: `app/api/v1/auth.py`, `app/api/v1/ocorrencias.py`, `app/api/v1/usuarios.py`.
+
+2. **Definir estratégia de autenticação para mobile**
+   - JWT (access + refresh) para app mobile.
+   - Manter sessão cookie para web tradicional (transição gradual).
+
+3. **Padronizar contratos de resposta**
+   - Envelopes consistentes (`data`, `error`, `meta`).
+   - Códigos HTTP e mensagens previsíveis.
+
+4. **Documentar API com OpenAPI/Swagger**
+   - Viabiliza integração mais rápida do time mobile.
+
+## Prioridade 3 (escala e operação)
+
+1. **Observabilidade**
+   - Logging estruturado (JSON), correlation/request id, captura de exceções.
+
+2. **Controle de configuração por ambiente**
+   - `config/dev.py`, `config/test.py`, `config/prod.py`.
+
+3. **Paginação/filtros server-side e indexação de banco**
+   - Preparar consultas para crescimento de dados de ocorrências.
+
+4. **Pipeline de qualidade (CI)**
+   - lint + testes + checagem de segurança.
+
+## 5) Proposta de arquitetura-alvo (incremental)
+
+```text
+app/
+  __init__.py
+  models/
+    usuario.py
+    ocorrencia.py
+  web/
+    auth/routes.py
+    dashboard/routes.py
+    usuarios/routes.py
+    ocorrencias/routes.py
+  api/
+    v1/
+      auth/routes.py
+      usuarios/routes.py
+      ocorrencias/routes.py
+      schemas/
+  services/
+    auth_service.py
+    usuarios_service.py
+    ocorrencias_service.py
+  repositories/
+  utils/
+migrations/
+tests/
+```
+
+> Observação: não precisa fazer big-bang. A evolução pode ser por estrangulamento, mantendo rotas web existentes e introduzindo API aos poucos.
+
+## 6) Plano de execução em 30/60/90 dias
+
+### 0–30 dias
+- Migrar para Alembic.
+- Criar testes essenciais.
+- Extrair serviços de `usuarios` e `ocorrencias`.
+
+### 31–60 dias
+- Publicar `/api/v1` com login + CRUD de ocorrências.
+- Definir contratos e documentação OpenAPI.
+- Implementar JWT para mobile.
+
+### 61–90 dias
+- Completar observabilidade e CI robusta.
+- Otimizar consultas, paginação e índices.
+- Preparar versão beta integrada com app mobile.
+
+## 7) Conclusão executiva
+
+A base atual está **boa para continuidade do produto web**, pois já tem blueprints e organização inicial.
+Para ficar realmente robusta e pronta para um novo app mobile, o passo mais importante é **separar melhor regra de negócio e exposição HTTP**, junto com **migração de banco + API versionada + testes**.
+
+Esse conjunto reduz risco técnico e permite escalar o backend para dois clientes (web e mobile) sem duplicar lógica.
