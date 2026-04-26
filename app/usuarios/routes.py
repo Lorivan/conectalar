@@ -26,9 +26,10 @@ def cadastro():
             db.session.commit()
             flash('Usuário cadastrado com sucesso.', 'success')
             return redirect(url_for('dashboard.dashboard'))
-        except SQLAlchemyError:
+        except Exception as e:
             db.session.rollback()
-            flash('Não foi possível cadastrar o usuário. Verifique os dados.', 'danger')
+            print("ERRO REAL AO CADASTRAR:", repr(e))
+            flash(f'Erro: {e}', 'danger')
 
     return render_template('cadastro.html')
 
