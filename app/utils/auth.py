@@ -1,7 +1,7 @@
 from functools import wraps
 from typing import Callable, TypeVar
 
-from flask import redirect, session, url_for
+from flask import abort, redirect, session, url_for
 
 F = TypeVar('F', bound=Callable)
 
@@ -20,7 +20,7 @@ def sindico_obrigatorio(view_func: F) -> F:
     @wraps(view_func)
     def wrapper(*args, **kwargs):
         if session.get('usuario_tipo') != 'sindico':
-            return 'Acesso negado.', 403
+            abort(403)
         return view_func(*args, **kwargs)
 
     return wrapper  # type: ignore[return-value]

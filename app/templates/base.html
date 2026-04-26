@@ -1,19 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <style>
+    :root {
+        --conecta-bg: #f4f5f9;
+        --conecta-primary: #1f2372;
+        --conecta-primary-soft: #2e328d;
+    }
+
+    body {
+        background: var(--conecta-bg);
+    }
+
     .text-roxo-conecta { color: #7b5cfb !important; }
     .bg-roxo-conecta { background-color: #7b5cfb !important; color: white !important; }
     .btn-roxo-conecta { background-color: #1E175B !important; color: white !important; border: none; }
     .btn-roxo-conecta:hover { background-color: #6146cf !important; color: white !important; }
+
+    .conecta-topbar {
+        height: 92px;
+        background: #ffffff;
+        border-bottom: 1px solid #d7d9e3;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    .conecta-brand {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .layout-shell {
+        display: flex;
+        min-height: calc(100vh - 92px);
+    }
+
+    .conecta-sidebar {
+        width: 360px;
+        background: #f1f2f8;
+        border-right: 1px solid #d6d8e2;
+        box-shadow: inset -8px 0 16px rgba(0, 0, 0, 0.03);
+        padding: 22px 18px;
+    }
+
+    .sidebar-card {
+        border-radius: 14px;
+        padding: 14px 18px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #ffffff;
+        font-size: 1.05rem;
+        font-weight: 500;
+        background: linear-gradient(140deg, var(--conecta-primary), var(--conecta-primary-soft));
+        text-decoration: none;
+    }
+
+    .sidebar-card-muted {
+        border-radius: 14px;
+        padding: 14px 18px;
+        background: #e6e8ef;
+        color: #161927;
+        font-size: 1.05rem;
+        font-weight: 600;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .sidebar-group-title {
+        margin: 24px 8px 8px;
+        color: #2b2f3f;
+        font-weight: 600;
+        font-size: 1.9rem;
+        border-top: 1px solid #c6c9d6;
+        padding-top: 22px;
+    }
+
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 1.05rem;
+        color: #181a24;
+        padding: 10px 10px;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+    .sidebar-item:hover {
+        background: #e5e8f4;
+    }
+
+    .main-panel {
+        flex: 1;
+        padding: 30px 34px;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConectaLar - Gestão de Condomínio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
+{% if request.endpoint == 'dashboard.dashboard' %}
+    <header class="conecta-topbar d-flex align-items-center justify-content-between px-4 px-lg-5">
+        <a class="d-flex align-items-center text-decoration-none text-dark" href="{{ url_for('dashboard.dashboard') }}">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="46" class="me-3">
+            <div class="conecta-brand">
+                <strong style="font-size:2.15rem;">ConectaLar</strong>
+                <span style="font-size:2.05rem; font-weight:400;"> - Plataforma para Gestão de Condomínio</span>
+            </div>
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger px-4 py-2 rounded-3">Sair</a>
+    </header>
+
+    {% block full_content %}{% endblock %}
+{% else %}
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard.dashboard') }}">
@@ -38,6 +144,7 @@
 
     {% block content %}{% endblock %}
 </div>
+{% endif %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

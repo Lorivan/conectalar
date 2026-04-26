@@ -9,6 +9,7 @@
             </div>
             <div class="card-body p-4">
                 <form method="POST" action="">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                     <div class="mb-3">
                         <label for="titulo" class="form-label">Título da Ocorrência (Ex: Lâmpada Queimada, Barulho)</label>
                         <input type="text" class="form-control" id="titulo" name="titulo" required>
