@@ -107,3 +107,21 @@ Vinicius Maciel Azevedo
 📌 Observações
 
 Este projeto foi desenvolvido com foco em aprendizado prático e aplicação real de conceitos de desenvolvimento web, evoluindo de um MVP para uma base sólida de sistema.
+---
+
+## 🔒 Variáveis de ambiente para produção
+
+Para executar em produção com segurança:
+
+- `APP_ENV=production`
+- `SECRET_KEY=<chave forte obrigatória>`
+- `DEBUG=false`
+- `AUTO_CREATE_DB=false`
+
+> Em `APP_ENV=production`, a aplicação não inicia sem `SECRET_KEY` definida.
+
+## 🩺 Observabilidade e segurança (implementado)
+
+- Endpoint de saúde: `GET /healthz`
+- Proteção CSRF habilitada para requisições mutáveis (`POST`, etc.)
+- Páginas de erro padronizadas para `400`, `403`, `404` e `500`

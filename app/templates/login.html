@@ -8,6 +8,7 @@
                 <h3 class="text-center mb-4">Acesso ao Sistema</h3>
 
                 <form method="POST" action="">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
                         <input type="email" class="form-control" id="email" name="email" required placeholder="seu@email.com">
