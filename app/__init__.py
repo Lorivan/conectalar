@@ -26,6 +26,7 @@ def create_app():
     app.register_blueprint(ocorrencias_bp)
     app.register_blueprint(usuarios_bp)
 
+
     app.jinja_env.globals['csrf_token'] = generate_csrf_token
     app.before_request(validate_csrf_for_request)
 
@@ -36,6 +37,7 @@ def create_app():
                 db.create_all()
             except SQLAlchemyError as exc:
                 app.logger.error('Falha ao executar db.create_all() no startup: %s', exc)
+
 
     @app.get('/healthz')
     def healthz():
@@ -60,6 +62,7 @@ def create_app():
     @app.errorhandler(500)
     def internal_error(_error):
         return render_template('error.html', code=500, message='Erro interno no servidor.'), 500
+
 
     return app
 

@@ -120,8 +120,11 @@ Para executar em produção com segurança:
 
 > Em `APP_ENV=production`, a aplicação não inicia sem `SECRET_KEY` definida.
 
+
 ## 🩺 Observabilidade e segurança (implementado)
 
 - Endpoint de saúde: `GET /healthz`
 - Proteção CSRF habilitada para requisições mutáveis (`POST`, etc.)
 - Páginas de erro padronizadas para `400`, `403`, `404` e `500`
+
+
