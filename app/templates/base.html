@@ -96,6 +96,12 @@
         flex: 1;
         padding: 30px 34px;
     }
+
+    .conecta-login-topbar {
+        height: 104px;
+        background: #ffffff;
+        border-bottom: 1px solid #d9dce9;
+    }
 </style>
 <head>
     <meta charset="UTF-8">
@@ -119,6 +125,31 @@
     </header>
 
     {% block full_content %}{% endblock %}
+{% elif request.endpoint == 'auth.login' %}
+<header class="conecta-login-topbar d-flex align-items-center">
+    <div class="container-fluid px-4 px-lg-5">
+        <a class="d-flex align-items-center text-decoration-none" href="{{ url_for('auth.login') }}">
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="52" class="me-3">
+            <span class="fw-bold" style="font-size:3rem; color:#1d2368;">ConectaLar</span>
+            <span class="ms-2" style="font-size:2.75rem; color:#262c54; font-weight:400;">- Plataforma para Gestão de Condomínio</span>
+        </a>
+    </div>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-4">
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+
+{% block content %}{% endblock %}
 {% else %}
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
