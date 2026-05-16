@@ -21,7 +21,44 @@ A avaliação da Sprint 3 apontou três lacunas de apresentação e comprovaçã
 | Média | Definir critérios de aceite da Sprint 4 | Evita entrega subjetiva | Checklist de pronto com validação objetiva |
 | Média | Complementar testes manuais com comandos técnicos | Reforça confiança na entrega | Comandos SQL, `git log`, execução local e healthcheck |
 
-## 3. Estrutura modular atual do projeto
+## 3. Sugestão de evolução do sistema para a Sprint 4
+
+A recomendação técnica é que a Sprint 4 não tente apenas "tirar prints" para a avaliação. Ela deve consolidar o MVP em uma entrega demonstrável, rastreável e mais confiável. A evolução sugerida é organizar a sprint em quatro frentes complementares: documentação/evidências, confiabilidade técnica, melhorias funcionais de alto valor e preparação para produção assistida.
+
+### 3.1 Objetivo macro da Sprint 4
+
+**Objetivo recomendado:** entregar uma versão do ConectaLar que consiga demonstrar, de ponta a ponta, que a arquitetura está modularizada, que usuários e ocorrências são persistidos no banco, que as principais funcionalidades são rastreáveis no Git e que os fluxos críticos têm critérios de aceite verificáveis.
+
+### 3.2 Backlog priorizado
+
+| Prioridade | Item de evolução | Descrição objetiva | Critério de aceite | Evidência esperada |
+| --- | --- | --- | --- | --- |
+| P0 | Evidenciar arquitetura modular | Mostrar a separação por blueprints, serviços, utilitários, modelos e templates | Documento com árvore modular e responsabilidades por módulo revisado | Print/trecho da árvore de pastas e seção de responsabilidades |
+| P0 | Comprovar persistência real | Executar cadastro de usuário, criação de ocorrência e atualização de status com consulta direta no banco | O mesmo dado exibido na tela aparece em consulta SQL após reiniciar a aplicação | Prints das telas + consulta SQL em `usuarios` e `ocorrencias` |
+| P0 | Fechar rastreabilidade por commit | Relacionar cada funcionalidade entregue ao commit, arquivos alterados e evidência | Matriz revisada com commits atuais e evidências coletadas | Tabela de rastreabilidade preenchida |
+| P1 | Adicionar validações server-side | Validar campos obrigatórios, tamanho mínimo e status permitido antes de persistir | Formulários rejeitam dados inválidos com mensagem amigável | Teste manual com dados inválidos + print da mensagem |
+| P1 | Criar testes automatizados mínimos | Cobrir app factory, login, autorização de síndico, criação de ocorrência e dashboard | Testes executam localmente e passam | Saída do `pytest` anexada |
+| P1 | Padronizar tratamento de erros de cadastro | Substituir `print` por `app.logger` e mensagens seguras ao usuário | Erro técnico não vaza para tela e é registrado em log | Evidência de erro controlado |
+| P2 | Melhorar listagens | Adicionar busca/filtro/paginação no dashboard e usuários | Listagens continuam usáveis com muitos registros | Print com filtro/paginação funcionando |
+| P2 | Preparar migrações versionadas | Iniciar Flask-Migrate/Alembic para evoluir schema sem depender de `create_all` | Migração inicial criada e documentada | Arquivos de migração + comando documentado |
+
+### 3.3 Sequência recomendada de execução
+
+1. **Dia 1 — Fechamento de arquitetura e evidências:** revisar esta documentação, completar a matriz de commits e criar a pasta final de evidências.
+2. **Dia 2 — Persistência ponta a ponta:** executar o fluxo completo no sistema, coletar prints e consultas SQL, reiniciar a aplicação e provar que os dados permanecem no banco.
+3. **Dia 3 — Qualidade mínima:** implementar validações server-side e testes automatizados dos fluxos críticos.
+4. **Dia 4 — Ajustes de robustez:** padronizar logs, remover mensagens técnicas da interface e revisar configurações de ambiente.
+5. **Dia 5 — Ensaio de apresentação:** rodar o sistema do zero, seguir o roteiro de evidências e garantir que cada funcionalidade tenha commit e prova associada.
+
+### 3.4 Resultado esperado ao final da Sprint 4
+
+Ao final da Sprint 4, a entrega deve permitir responder objetivamente às três perguntas da avaliação:
+
+- **Onde está a modularização?** Na estrutura por blueprints/domínios, serviços, utilitários e modelos documentada neste guia.
+- **Como sei que os dados persistem?** Pelo fluxo tela → banco → reinicialização → consulta SQL, com prints e queries salvos como evidência.
+- **Qual commit prova cada funcionalidade?** Pela matriz de rastreabilidade que liga funcionalidade, hash do commit, arquivos e evidência coletada.
+
+## 4. Estrutura modular atual do projeto
 
 ```text
 conectalar/
@@ -63,7 +100,9 @@ conectalar/
 | `app/utils/auth.py` | Decorators de autenticação e autorização | `login_obrigatorio` e `sindico_obrigatorio` |
 | `app/utils/csrf.py` | Proteção CSRF para requisições mutáveis | Geração e validação de token |
 
-## 4. Comprovação de persistência no banco
+
+## 5. Comprovação de persistência no banco
+
 
 A persistência deve ser demonstrada com uma sequência simples, reproduzível e documentada.
 
@@ -134,7 +173,8 @@ A persistência estará comprovada quando houver:
 - evidência de relacionamento entre `ocorrencias.usuario_id` e `usuarios.id`;
 - registro permanecendo disponível após reiniciar a aplicação.
 
-## 5. Matriz de rastreabilidade: funcionalidade × commit × evidência
+
+## 6. Matriz de rastreabilidade: funcionalidade × commit × evidência
 
 > Observação: os hashes abaixo foram extraídos do histórico atual com `git log --oneline --name-only`. Se novos ajustes forem realizados na Sprint 4, inclua os novos commits nesta tabela antes da entrega final.
 
@@ -150,7 +190,9 @@ A persistência estará comprovada quando houver:
 | Ajuste final da tela de login | `1dbf48f` — `ajuste tela de login` | `app/templates/login.html` | Print da tela de login atualizada |
 | Documentação de avaliação e prontidão | `600f1d2`, `4a5b8e7`, `7a074b6` — merges de avaliação | `docs/avaliacao_estrutura_projeto.md`, `docs/avaliacao_producao_2026-04-26.md` | Documentos anexados na entrega |
 
-## 6. Estrutura recomendada para evidências da Sprint 4
+
+## 7. Estrutura recomendada para evidências da Sprint 4
+
 
 Criar e preencher a seguinte estrutura durante a finalização:
 
@@ -190,7 +232,9 @@ Conteúdo mínimo recomendado para `docs/evidencias/sprint-04/README.md`:
 | 07-healthcheck.png | Saúde da aplicação e conexão com banco |
 ```
 
-## 7. Critérios de pronto da Sprint 4
+
+## 8. Critérios de pronto da Sprint 4
+
 
 A Sprint 4 pode ser considerada finalizada quando todos os itens abaixo estiverem marcados:
 
@@ -206,7 +250,8 @@ A Sprint 4 pode ser considerada finalizada quando todos os itens abaixo estivere
 - [ ] Matriz funcionalidade × commit × evidência revisada com o último commit da entrega.
 - [ ] Commit final criado com a documentação e ajustes finais da Sprint 4.
 
-## 8. Recomendações técnicas para o próximo incremento
+
+## 9. Recomendações técnicas para o próximo incremento
 
 Após concluir a Sprint 4, as próximas melhorias técnicas recomendadas são:
 
@@ -217,7 +262,9 @@ Após concluir a Sprint 4, as próximas melhorias técnicas recomendadas são:
 5. **Logs estruturados:** registrar erros e operações críticas sem usar `print`.
 6. **Padronização de timezone:** persistir datas em UTC e formatar para Brasília apenas na interface.
 
-## 9. Comandos úteis para a apresentação
+
+## 10. Comandos úteis para a apresentação
+
 
 ```bash
 # Ver estrutura de alto nível do projeto
