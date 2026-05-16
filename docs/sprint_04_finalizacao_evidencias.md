@@ -100,7 +100,9 @@ conectalar/
 | `app/utils/auth.py` | Decorators de autenticação e autorização | `login_obrigatorio` e `sindico_obrigatorio` |
 | `app/utils/csrf.py` | Proteção CSRF para requisições mutáveis | Geração e validação de token |
 
+
 ## 5. Comprovação de persistência no banco
+
 
 A persistência deve ser demonstrada com uma sequência simples, reproduzível e documentada.
 
@@ -171,6 +173,7 @@ A persistência estará comprovada quando houver:
 - evidência de relacionamento entre `ocorrencias.usuario_id` e `usuarios.id`;
 - registro permanecendo disponível após reiniciar a aplicação.
 
+
 ## 6. Matriz de rastreabilidade: funcionalidade × commit × evidência
 
 > Observação: os hashes abaixo foram extraídos do histórico atual com `git log --oneline --name-only`. Se novos ajustes forem realizados na Sprint 4, inclua os novos commits nesta tabela antes da entrega final.
@@ -186,6 +189,7 @@ A persistência estará comprovada quando houver:
 | Correção de cadastro de usuário | `6f11878` — `erro cadastro de usuario` | `app/usuarios/routes.py` | Cadastro de usuário com sucesso + consulta SQL em `usuarios` |
 | Ajuste final da tela de login | `1dbf48f` — `ajuste tela de login` | `app/templates/login.html` | Print da tela de login atualizada |
 | Documentação de avaliação e prontidão | `600f1d2`, `4a5b8e7`, `7a074b6` — merges de avaliação | `docs/avaliacao_estrutura_projeto.md`, `docs/avaliacao_producao_2026-04-26.md` | Documentos anexados na entrega |
+
 
 ## 7. Estrutura recomendada para evidências da Sprint 4
 
@@ -227,9 +231,10 @@ Conteúdo mínimo recomendado para `docs/evidencias/sprint-04/README.md`:
 | 07-healthcheck.png | Saúde da aplicação e conexão com banco |
 ```
 
+
 ## 8. Critérios de pronto da Sprint 4
 
-A Sprint 4 pode ser considerada finalizada quando todos os itens abaixo estiverem marcados:
+
 
 - [ ] README atualizado apontando para este documento de finalização.
 - [ ] Estrutura modular explicada com árvore de pastas e responsabilidades.
@@ -243,6 +248,7 @@ A Sprint 4 pode ser considerada finalizada quando todos os itens abaixo estivere
 - [ ] Matriz funcionalidade × commit × evidência revisada com o último commit da entrega.
 - [ ] Commit final criado com a documentação e ajustes finais da Sprint 4.
 
+
 ## 9. Recomendações técnicas para o próximo incremento
 
 Após concluir a Sprint 4, as próximas melhorias técnicas recomendadas são:
@@ -254,7 +260,11 @@ Após concluir a Sprint 4, as próximas melhorias técnicas recomendadas são:
 5. **Logs estruturados:** registrar erros e operações críticas sem usar `print`.
 6. **Padronização de timezone:** persistir datas em UTC e formatar para Brasília apenas na interface.
 
+
 ## 10. Comandos úteis para a apresentação
+
+
+
 
 ```bash
 # Ver estrutura de alto nível do projeto

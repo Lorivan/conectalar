@@ -56,3 +56,4 @@ Resultado obtido:
 ```
 
 A advertência está relacionada ao uso atual de `datetime.utcnow()` e deve ser tratada em evolução futura de timezone.
+
