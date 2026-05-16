@@ -92,6 +92,19 @@ http://127.0.0.1:5000/
 🔐 Usuário padrão
 Email: admin@conectalar.com
 Senha: 123
+## 📚 Documentação da Sprint 4
+
+Para responder aos pontos de melhoria da avaliação da Sprint 3, foi criado um guia de finalização da Sprint 4 com:
+
+- visão da estrutura modular do projeto;
+- roteiro para comprovar persistência no banco;
+- matriz de rastreabilidade entre funcionalidade, commit e evidência;
+- checklist de critérios de pronto.
+
+Documento: [`docs/sprint_04_finalizacao_evidencias.md`](docs/sprint_04_finalizacao_evidencias.md)
+
+---
+
 📈 Próximas melhorias
 Filtro por data
 Busca por palavra-chave
