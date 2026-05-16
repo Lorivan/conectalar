@@ -21,5 +21,5 @@ def gerar_hash_senha(senha_plana: str) -> str:
     if not senha_plana:
         raise ValueError('Senha inválida para geração de hash.')
 
-    # Novo padrão de cadastro usando Werkzeug
-    return generate_password_hash(senha_plana)
+    # Mantém o hash compatível com o tamanho do campo senha no banco.
+    return generate_password_hash(senha_plana, method='pbkdf2:sha256')

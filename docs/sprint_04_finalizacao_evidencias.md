@@ -193,7 +193,6 @@ A persistência estará comprovada quando houver:
 
 ## 7. Estrutura recomendada para evidências da Sprint 4
 
-
 Criar e preencher a seguinte estrutura durante a finalização:
 
 ```text
@@ -236,7 +235,6 @@ Conteúdo mínimo recomendado para `docs/evidencias/sprint-04/README.md`:
 ## 8. Critérios de pronto da Sprint 4
 
 
-A Sprint 4 pode ser considerada finalizada quando todos os itens abaixo estiverem marcados:
 
 - [ ] README atualizado apontando para este documento de finalização.
 - [ ] Estrutura modular explicada com árvore de pastas e responsabilidades.
@@ -264,6 +262,8 @@ Após concluir a Sprint 4, as próximas melhorias técnicas recomendadas são:
 
 
 ## 10. Comandos úteis para a apresentação
+
+
 
 
 ```bash

@@ -43,3 +43,17 @@ JOIN usuarios u ON u.id = o.usuario_id
 ORDER BY o.id DESC
 LIMIT 5;
 ```
+
+
+## Evidência automatizada já coletada
+
+A execução técnica da Sprint 4 adicionou testes automatizados cobrindo healthcheck, login, autorização, cadastro de usuário e criação de ocorrência.
+
+Resultado obtido:
+
+```text
+10 passed, 1 warning
+```
+
+A advertência está relacionada ao uso atual de `datetime.utcnow()` e deve ser tratada em evolução futura de timezone.
+

@@ -109,6 +109,17 @@ Documentos:
 - [`docs/sprint_04_finalizacao_evidencias.md`](docs/sprint_04_finalizacao_evidencias.md)
 - [`docs/sprint_04_plano_execucao.md`](docs/sprint_04_plano_execucao.md)
 
+- [`docs/sprint_04_execucao_realizada.md`](docs/sprint_04_execucao_realizada.md)
+
+Dependências de desenvolvimento/testes:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+---
+=======
+
 ## 📚 Documentação da Sprint 4
 
 Para responder aos pontos de melhoria da avaliação da Sprint 3, foi criado um guia de finalização da Sprint 4 com:
@@ -119,6 +130,7 @@ Para responder aos pontos de melhoria da avaliação da Sprint 3, foi criado um 
 - checklist de critérios de pronto.
 
 Documento: [`docs/sprint_04_finalizacao_evidencias.md`](docs/sprint_04_finalizacao_evidencias.md)
+
 
 📈 Próximas melhorias
 Filtro por data
