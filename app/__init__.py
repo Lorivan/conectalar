@@ -1,6 +1,11 @@
 # app/__init__.py
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
+
+try:
+    from flask_migrate import Migrate
+except ModuleNotFoundError:  # pragma: no cover
+    Migrate = None
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -8,6 +13,7 @@ from app.utils.csrf import generate_csrf_token, validate_csrf_for_request
 from config import Config
 
 db = SQLAlchemy()
+migrate = Migrate() if Migrate else None
 
 
 def create_app():
@@ -16,6 +22,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+    if migrate:
+        migrate.init_app(app, db)
     from app.auth.routes import auth_bp
     from app.dashboard.routes import dashboard_bp
     from app.ocorrencias.routes import ocorrencias_bp
