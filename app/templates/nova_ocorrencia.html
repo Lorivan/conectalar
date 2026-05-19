@@ -1,32 +1,70 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm mt-4">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Registrar Nova Ocorrência</h4>
-            </div>
-            <div class="card-body p-4">
-                <form method="POST" action="">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                    <div class="mb-3">
-                        <label for="titulo" class="form-label">Título da Ocorrência (Ex: Lâmpada Queimada, Barulho)</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="descricao" class="form-label">Descrição Detalhada</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="4" required placeholder="Descreva o problema com o máximo de detalhes..."></textarea>
-                    </div>
-                    <div class="d-flex justify-content-between">
+{% block full_content %}
+<div class="layout-shell">
+    <aside class="conecta-sidebar">
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+            <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
 
-                        <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-outline-secondary">Cancelar e Voltar</a>
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}">
+            <i class="bi bi-dot" style="font-size:1.4rem;"></i>
+            <span>Painel de Ocorrências</span>
+        </a>
 
-                        <button type="submit" class="btn btn-success">Salvar Reclamação</button>
+        <h5 class="sidebar-group-title">Cadastros</h5>
+        {% if session.get('usuario_tipo') == 'sindico' %}
+            <a class="sidebar-item" href="{{ url_for('usuarios.cadastro') }}"><i class="bi bi-person-plus"></i> + Novo Morador</a>
+            <a class="sidebar-card-muted" href="{{ url_for('ocorrencias.nova_ocorrencia') }}"><i class="bi bi-file-earmark-plus"></i> + Nova Ocorrência</a>
+        {% endif %}
+
+        <h5 class="sidebar-group-title">Consultas</h5>
+        {% if session.get('usuario_tipo') == 'sindico' %}
+            <a class="sidebar-item" href="{{ url_for('usuarios.lista_usuarios') }}"><i class="bi bi-list-ul"></i> Ver Lista de Moradores</a>
+        {% endif %}
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}"><i class="bi bi-list-check"></i> Lista de Ocorrências</a>
+    </aside>
+
+    <main class="main-panel">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                </form>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-lg-9 col-xl-8">
+                <h2 class="form-panel-title">Registrar Nova Ocorrência</h2>
+                <p class="form-panel-subtitle">Abra um novo chamado para a administração do condomínio.</p>
+
+                <div class="card form-panel-card">
+                    <div class="card-body p-4 p-lg-5">
+                        <form method="POST" action="">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título da Ocorrência (Ex: Lâmpada Queimada, Barulho)</label>
+                                <input type="text" class="form-control" id="titulo" name="titulo" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="descricao" class="form-label">Descrição Detalhada</label>
+                                <textarea class="form-control" id="descricao" name="descricao" rows="4" required placeholder="Descreva o problema com o máximo de detalhes..."></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url_for('dashboard.dashboard') }}" class="btn-secondary-soft"><i class="bi bi-arrow-left"></i> Cancelar e Voltar</a>
+                                <button type="submit" class="btn-primary-conecta">Salvar Reclamação</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
 {% endblock %}

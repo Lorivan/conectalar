@@ -173,6 +173,59 @@
     }
 
 
+
+    .form-panel-title {
+        color: #1e293b;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+    }
+
+    .form-panel-subtitle {
+        color: #64748b;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-panel-card {
+        background: #ffffff;
+        border: 0;
+        border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+
+    .form-panel-card .form-label {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #334155;
+    }
+
+    .form-panel-card .form-control {
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-panel-card .form-control:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.18);
+    }
+
+    .btn-secondary-soft {
+        background: transparent;
+        border: 1px solid transparent;
+        color: #64748b;
+        border-radius: 12px;
+        padding: 0.55rem 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
     .moradores-table {
         margin-bottom: 0;
     }
@@ -386,7 +439,10 @@
 </head>
 <body class="bg-light">
 
-{% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios'] %}
+
+{% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios', 'ocorrencias.nova_ocorrencia'] %}
+
+
     <header class="conecta-topbar d-flex align-items-center justify-content-between px-4 px-lg-5">
         <a class="d-flex align-items-center text-decoration-none text-dark" href="{{ url_for('dashboard.dashboard') }}">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="46" class="me-3">
