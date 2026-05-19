@@ -127,6 +127,89 @@
         font-weight: 700;
         font-size: 3.2rem;
         color: #1e293b;
+
+    }
+
+
+    .section-subtitle {
+        color: #64748b;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .btn-primary-conecta {
+        background: #2563eb;
+        border: 1px solid #2563eb;
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 0.55rem 1rem;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .btn-primary-conecta:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: #ffffff;
+    }
+
+    .btn-secondary-ghost {
+        background: transparent;
+        border: 1px solid #94a3b8;
+        color: #64748b;
+        border-radius: 12px;
+        padding: 0.55rem 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .btn-secondary-ghost:hover {
+        background: #f8fafc;
+        border-color: #64748b;
+        color: #475569;
+    }
+
+
+    .moradores-table {
+        margin-bottom: 0;
+    }
+
+    .moradores-table th,
+    .moradores-table td {
+        padding: 0.95rem 0.85rem;
+        vertical-align: middle;
+    }
+
+    .morador-nome {
+        margin: 0;
+        color: #1e293b;
+        font-weight: 600;
+    }
+
+    .tipo-pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.32rem 0.78rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1;
+        border: 1px solid transparent;
+    }
+
+    .tipo-pill-sindico {
+        background: #e8f1ff;
+        color: #1e3a8a;
+        border-color: #c8dbff;
+    }
+
+    .tipo-pill-morador {
+        background: #eef2f7;
+        color: #475569;
+        border-color: #d9e1ec;
     }
 
     .main-panel {
@@ -303,7 +386,7 @@
 </head>
 <body class="bg-light">
 
-{% if request.endpoint == 'dashboard.dashboard' %}
+{% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios'] %}
     <header class="conecta-topbar d-flex align-items-center justify-content-between px-4 px-lg-5">
         <a class="d-flex align-items-center text-decoration-none text-dark" href="{{ url_for('dashboard.dashboard') }}">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="46" class="me-3">
