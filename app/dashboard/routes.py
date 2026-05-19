@@ -4,6 +4,7 @@ from sqlalchemy import case, func
 from app import db
 from app.models import Ocorrencia
 from app.utils.auth import login_obrigatorio
+from app.utils.datetime_utils import format_datetime_brt
 
 dashboard_bp = Blueprint('dashboard', __name__)
 
@@ -14,6 +15,8 @@ STATUS_VALIDOS = {'Pendente', 'Em Andamento', 'Resolvido'}
 @login_obrigatorio
 def dashboard():
     filtro_status = request.args.get('status', '').strip()
+    filtro_texto = request.args.get('q', '').strip()
+    pagina = request.args.get('pagina', default=1, type=int)
     if filtro_status not in STATUS_VALIDOS:
         filtro_status = ''
 
@@ -37,13 +40,19 @@ def dashboard():
     query = Ocorrencia.query
     if filtro_status:
         query = query.filter(Ocorrencia.status == filtro_status)
+    if filtro_texto:
+        termo = f'%{filtro_texto}%'
+        query = query.filter((Ocorrencia.titulo.ilike(termo)) | (Ocorrencia.descricao.ilike(termo)))
 
-    todas_ocorrencias = query.order_by(ordem_status, Ocorrencia.id.desc()).all()
+    paginacao = query.order_by(ordem_status, Ocorrencia.id.desc()).paginate(page=pagina, per_page=10, error_out=False)
 
     return render_template(
         'dashboard.html',
-        ocorrencias=todas_ocorrencias,
+        ocorrencias=paginacao.items,
         contagem=contagem,
         total_ocorrencias=sum(contagem.values()),
-        filtro_status=filtro_status
+        filtro_status=filtro_status,
+        filtro_texto=filtro_texto,
+        paginacao=paginacao,
+        format_datetime_brt=format_datetime_brt,
     )
