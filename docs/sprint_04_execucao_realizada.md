@@ -21,10 +21,12 @@
 - Atualização das badges de status para formato **pill**, com bordas totalmente arredondadas, fundo pastel e texto em tom mais escuro da mesma paleta para melhor legibilidade.
 - Padronização da coluna **Ações (Administração)** com botões consistentes entre estados, incluindo estado finalizado com aparência de botão desabilitado (cinza claro).
 - Ajuste do botão **Sair** da topbar para estilo **ghost** (fundo transparente, borda fina cinza, texto cinza e ícone discreto), reduzindo distração visual.
+
 - Unificação estrutural das telas **Gestão de Moradores**, **Nova Ocorrência** e **Cadastrar Novo Morador** com o shell moderno (topbar branca + sidebar escura + painel central).
 - Padronização dos formulários de **Nova Ocorrência** e **Cadastro de Morador** com título fora de barras rígidas, subtítulos contextuais, card branco com cantos arredondados e sombra suave.
 - Refinamento de UI dos campos de formulário (labels semibold em grafite, bordas cinza suaves, foco com borda azul e ring leve) para maior consistência visual e melhor feedback de interação.
 - Modernização da tabela de moradores com badges de tipo em estilo **pill**, padronização de nomes para formato de nome próprio e aumento de espaçamento interno das linhas.
+
 
 ## Evidências de aceite
 - `pytest` executa localmente com sucesso.
