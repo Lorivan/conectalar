@@ -1,47 +1,87 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm mt-4">
-            <div class="card-header bg-dark text-white">
-                <h4 class="mb-0">Cadastrar Novo Morador / Usuário</h4>
-            </div>
-            <div class="card-body p-4">
-                <form method="POST" action="">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                    <div class="mb-3">
-                        <label class="form-label">Nome Completo</label>
-                        <input type="text" class="form-control" name="nome" required>
+{% block full_content %}
+<div class="layout-shell">
+    <aside class="conecta-sidebar">
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+            <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}">
+            <i class="bi bi-dot" style="font-size:1.4rem;"></i>
+            <span>Painel de Ocorrências</span>
+        </a>
+
+        <h5 class="sidebar-group-title">Cadastros</h5>
+        {% if session.get('usuario_tipo') == 'sindico' %}
+            <a class="sidebar-card-muted" href="{{ url_for('usuarios.cadastro') }}"><i class="bi bi-person-plus"></i> + Novo Morador</a>
+            <a class="sidebar-item" href="{{ url_for('ocorrencias.nova_ocorrencia') }}"><i class="bi bi-file-earmark-plus"></i> + Nova Ocorrência</a>
+        {% endif %}
+
+        <h5 class="sidebar-group-title">Consultas</h5>
+        {% if session.get('usuario_tipo') == 'sindico' %}
+            <a class="sidebar-item" href="{{ url_for('usuarios.lista_usuarios') }}"><i class="bi bi-list-ul"></i> Ver Lista de Moradores</a>
+        {% endif %}
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}"><i class="bi bi-list-check"></i> Lista de Ocorrências</a>
+    </aside>
+
+    <main class="main-panel">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">E-mail (Será o login)</label>
-                        <input type="email" class="form-control" name="email" required>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-lg-8 col-xl-7">
+                <h2 class="form-panel-title">Cadastrar Novo Morador / Usuário</h2>
+                <p class="form-panel-subtitle">Preencha os dados para registrar um novo usuário ou morador no sistema.</p>
+
+                <div class="card form-panel-card">
+                    <div class="card-body p-4 p-lg-5">
+                        <form method="POST" action="">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                            <div class="mb-3">
+                                <label class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control" name="nome" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">E-mail (Será o login)</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Senha</label>
+                                    <input type="password" class="form-control" name="senha" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Unidade (Casa/Apto)</label>
+                                    <input type="text" class="form-control" name="unidade" placeholder="Ex: Casa 12" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Tipo de Usuário</label>
+                                <select class="form-select" name="tipo">
+                                    <option value="morador">Morador</option>
+                                    <option value="sindico">Síndico / Admin</option>
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url_for('dashboard.dashboard') }}" class="btn-secondary-soft"><i class="bi bi-arrow-left"></i> Voltar</a>
+                                <button type="submit" class="btn-primary-conecta">Finalizar Cadastro</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Senha</label>
-                            <input type="password" class="form-control" name="senha" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">Unidade (Casa/Apto)</label>
-                            <input type="text" class="form-control" name="unidade" placeholder="Ex: Casa 12" required>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">Tipo de Usuário</label>
-                        <select class="form-select" name="tipo">
-                            <option value="morador">Morador</option>
-                            <option value="sindico">Síndico / Admin</option>
-                        </select>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-dark">Finalizar Cadastro</button>
-                        <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-outline-secondary">Voltar</a>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
 {% endblock %}

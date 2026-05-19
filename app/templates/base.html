@@ -127,9 +127,7 @@
         font-weight: 700;
         font-size: 3.2rem;
         color: #1e293b;
-
     }
-
 
     .section-subtitle {
         color: #64748b;
@@ -166,14 +164,6 @@
         gap: 0.35rem;
     }
 
-    .btn-secondary-ghost:hover {
-        background: #f8fafc;
-        border-color: #64748b;
-        color: #475569;
-    }
-
-
-
     .form-panel-title {
         color: #1e293b;
         font-size: 2rem;
@@ -202,15 +192,20 @@
         color: #334155;
     }
 
-    .form-panel-card .form-control {
+
+    .form-panel-card .form-control,
+    .form-panel-card .form-select {
         border: 1px solid #cbd5e1;
         border-radius: 10px;
+        background-color: #ffffff;
         transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .form-panel-card .form-control:focus {
+    .form-panel-card .form-control:focus,
+    .form-panel-card .form-select:focus {
         border-color: #2563eb;
         box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.18);
+        background-color: #ffffff;
     }
 
     .btn-secondary-soft {
@@ -226,8 +221,10 @@
         gap: 0.35rem;
     }
 
-    .moradores-table {
-        margin-bottom: 0;
+
+    .btn-secondary-soft:hover {
+        background: #f8fafc;
+        color: #475569;
     }
 
     .moradores-table th,
@@ -440,8 +437,7 @@
 <body class="bg-light">
 
 
-{% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios', 'ocorrencias.nova_ocorrencia'] %}
-
+{% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios', 'ocorrencias.nova_ocorrencia', 'usuarios.cadastro'] %}
 
     <header class="conecta-topbar d-flex align-items-center justify-content-between px-4 px-lg-5">
         <a class="d-flex align-items-center text-decoration-none text-dark" href="{{ url_for('dashboard.dashboard') }}">
