@@ -39,13 +39,13 @@
             {% endif %}
         {% endwith %}
 
-        <div class="mb-3" style="font-size:1.95rem; color:#2f5ea7;">
+        <div class="mb-3" style="font-size:1.95rem; color:#64748b;">
             Dashboard <i class="bi bi-chevron-right mx-1" style="font-size:1.15rem;"></i>
-            <span style="color:#111;">Painel de Ocorrências</span>
+            <span style="color:#1e293b;">Painel de Ocorrências</span>
         </div>
 
-        <h1 style="font-weight:700; font-size:3.2rem;">Painel de Ocorrências</h1>
-        <p style="font-size:2rem; color:#2a2a2a;">Acompanhe as demandas do Condomínio.</p>
+        <h1 class="page-title">Painel de Ocorrências</h1>
+        <p style="font-size:2rem; color:#334155;">Acompanhe as demandas do Condomínio.</p>
 
         <hr class="my-4" style="border-color:#afb4c2;">
 
@@ -64,22 +64,62 @@
         <div class="row g-3 mb-4 text-center">
             <div class="col-md-3">
                 <a href="{{ url_for('dashboard.dashboard') }}" class="text-decoration-none">
-                    <div class="card shadow-sm border-primary border-2 rounded-4"><div class="card-body py-4"><h6 class="text-dark">Todas</h6><h2 class="mb-0">{{ total_ocorrencias }}</h2></div></div>
+                    <div class="card summary-card">
+                        <div class="card-body">
+                            <div class="summary-card-content">
+                                <span class="summary-icon summary-icon-all"><i class="bi bi-collection"></i></span>
+                                <div>
+                                    <h6 class="summary-card-title">Todas</h6>
+                                    <h2 class="summary-card-value">{{ total_ocorrencias }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </a>
             </div>
             <div class="col-md-3">
                 <a href="{{ url_for('dashboard.dashboard', status='Pendente') }}" class="text-decoration-none">
-                    <div class="card shadow-sm border-warning border-2 rounded-4"><div class="card-body py-4"><h6 class="text-dark">Pendentes</h6><h2 class="mb-0">{{ contagem['Pendente'] }}</h2></div></div>
+                    <div class="card summary-card">
+                        <div class="card-body">
+                            <div class="summary-card-content">
+                                <span class="summary-icon summary-icon-pending"><i class="bi bi-hourglass-split"></i></span>
+                                <div>
+                                    <h6 class="summary-card-title">Pendentes</h6>
+                                    <h2 class="summary-card-value">{{ contagem['Pendente'] }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </a>
             </div>
             <div class="col-md-3">
                 <a href="{{ url_for('dashboard.dashboard', status='Em Andamento') }}" class="text-decoration-none">
-                    <div class="card shadow-sm border-info border-2 rounded-4"><div class="card-body py-4"><h6 class="text-dark">Em Andamento</h6><h2 class="mb-0">{{ contagem['Em Andamento'] }}</h2></div></div>
+                    <div class="card summary-card">
+                        <div class="card-body">
+                            <div class="summary-card-content">
+                                <span class="summary-icon summary-icon-progress"><i class="bi bi-arrow-repeat"></i></span>
+                                <div>
+                                    <h6 class="summary-card-title">Em Andamento</h6>
+                                    <h2 class="summary-card-value">{{ contagem['Em Andamento'] }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </a>
             </div>
             <div class="col-md-3">
                 <a href="{{ url_for('dashboard.dashboard', status='Resolvido') }}" class="text-decoration-none">
-                    <div class="card shadow-sm border-success border-2 rounded-4"><div class="card-body py-4"><h6 class="text-dark">Resolvidos</h6><h2 class="mb-0">{{ contagem['Resolvido'] }}</h2></div></div>
+                    <div class="card summary-card">
+                        <div class="card-body">
+                            <div class="summary-card-content">
+                                <span class="summary-icon summary-icon-done"><i class="bi bi-check2-circle"></i></span>
+                                <div>
+                                    <h6 class="summary-card-title">Resolvidos</h6>
+                                    <h2 class="summary-card-value">{{ contagem['Resolvido'] }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </a>
             </div>
         </div>
@@ -104,22 +144,31 @@
                         <tr>
                             <td>#{{ ocorrencia.id }}</td>
                             <td>{{ format_datetime_brt(ocorrencia.data_criacao) }}</td>
-                            <td><strong>{{ ocorrencia.titulo }}</strong><br><small>{{ ocorrencia.descricao }}</small></td>
+                            <td class="ocorrencia-title-cell">
+                                <p class="ocorrencia-title-main">{{ ocorrencia.titulo }}</p>
+                                <small class="ocorrencia-title-sub">{{ ocorrencia.descricao }}</small>
+                            </td>
                             <td>
-                                <span class="badge {% if ocorrencia.status == 'Pendente' %}bg-warning text-dark{% elif ocorrencia.status == 'Resolvido' %}bg-success{% else %}bg-info{% endif %}">
+                                <span class="status-badge {% if ocorrencia.status == 'Pendente' %}status-badge-pendente{% elif ocorrencia.status == 'Resolvido' %}status-badge-resolvido{% else %}status-badge-andamento{% endif %}">
                                     {{ ocorrencia.status }}
                                 </span>
                             </td>
                             <td>{{ ocorrencia.autor.nome }}</td>
 
                             {% if session.get('usuario_tipo') == 'sindico' %}
-                                <td class="text-center">
+                                <td class="text-center admin-action-cell">
                                     {% if ocorrencia.status == 'Pendente' %}
-                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Em Andamento') }}" class="btn btn-sm btn-outline-info">Em Andamento</a>
+                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Em Andamento') }}" class="admin-action-btn admin-action-progress" title="Mover para Em Andamento" aria-label="Mover para Em Andamento">
+                                            <i class="bi bi-pencil-square"></i> Em Andamento
+                                        </a>
                                     {% elif ocorrencia.status == 'Em Andamento' %}
-                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Resolvido') }}" class="btn btn-sm btn-success">✓ Resolver</a>
+                                        <a href="{{ url_for('ocorrencias.atualizar_status', id=ocorrencia.id, novo_status='Resolvido') }}" class="admin-action-btn admin-action-resolve" title="Marcar como Resolvido" aria-label="Marcar como Resolvido">
+                                            <i class="bi bi-check2-circle"></i> Resolver
+                                        </a>
                                     {% else %}
-                                        <span class="text-muted">Finalizado</span>
+                                        <span class="admin-action-btn admin-action-disabled" aria-disabled="true" title="Ocorrência já finalizada">
+                                            <i class="bi bi-check2-all"></i> Finalizado
+                                        </span>
                                     {% endif %}
                                 </td>
                             {% endif %}

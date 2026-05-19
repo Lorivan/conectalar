@@ -5,6 +5,9 @@
         --conecta-bg: #f4f5f9;
         --conecta-primary: #1f2372;
         --conecta-primary-soft: #2e328d;
+        --sidebar-bg: #0f172a;
+        --sidebar-surface: #1e293b;
+        --sidebar-text: #94a3b8;
     }
 
     body {
@@ -28,6 +31,27 @@
         font-weight: 600;
     }
 
+
+    .topbar-logout {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.95rem;
+        border-radius: 12px;
+        border: 1px solid #cdd3df;
+        background: transparent;
+        color: #5f687c;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+    }
+
+    .topbar-logout:hover {
+        background: #f3f5f9;
+        border-color: #b8c0cf;
+        color: #434c61;
+    }
+
     .layout-shell {
         display: flex;
         min-height: calc(100vh - 92px);
@@ -35,9 +59,9 @@
 
     .conecta-sidebar {
         width: 360px;
-        background: #f1f2f8;
-        border-right: 1px solid #d6d8e2;
-        box-shadow: inset -8px 0 16px rgba(0, 0, 0, 0.03);
+        background: var(--sidebar-bg);
+        border-right: 1px solid #1f2937;
+        box-shadow: inset -8px 0 18px rgba(0, 0, 0, 0.28);
         padding: 22px 18px;
     }
 
@@ -50,16 +74,16 @@
         gap: 12px;
         color: #ffffff;
         font-size: 1.05rem;
-        font-weight: 500;
-        background: linear-gradient(140deg, var(--conecta-primary), var(--conecta-primary-soft));
+        font-weight: 600;
+        background: var(--sidebar-surface);
         text-decoration: none;
     }
 
     .sidebar-card-muted {
         border-radius: 14px;
         padding: 14px 18px;
-        background: #e6e8ef;
-        color: #161927;
+        background: rgba(148, 163, 184, 0.12);
+        color: #ffffff;
         font-size: 1.05rem;
         font-weight: 600;
         text-decoration: none;
@@ -70,10 +94,10 @@
 
     .sidebar-group-title {
         margin: 24px 8px 8px;
-        color: #2b2f3f;
+        color: var(--sidebar-text);
         font-weight: 600;
         font-size: 1.9rem;
-        border-top: 1px solid #c6c9d6;
+        border-top: 1px solid rgba(148, 163, 184, 0.24);
         padding-top: 22px;
     }
 
@@ -82,19 +106,336 @@
         align-items: center;
         gap: 14px;
         font-size: 1.05rem;
-        color: #181a24;
+        color: var(--sidebar-text);
         padding: 10px 10px;
         border-radius: 10px;
         text-decoration: none;
     }
 
     .sidebar-item:hover {
-        background: #e5e8f4;
+        background: rgba(148, 163, 184, 0.14);
+    }
+
+
+    .sidebar-card:hover,
+    .sidebar-card-muted:hover,
+    .sidebar-item:hover {
+        color: #ffffff;
+    }
+
+    .page-title {
+        font-weight: 700;
+        font-size: 3.2rem;
+        color: #1e293b;
+    }
+
+
+    .section-subtitle {
+        color: #64748b;
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .btn-primary-conecta {
+        background: #2563eb;
+        border: 1px solid #2563eb;
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 0.55rem 1rem;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .btn-primary-conecta:hover {
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        color: #ffffff;
+    }
+
+    .btn-secondary-ghost {
+        background: transparent;
+        border: 1px solid #94a3b8;
+        color: #64748b;
+        border-radius: 12px;
+        padding: 0.55rem 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .btn-secondary-ghost:hover {
+        background: #f8fafc;
+        border-color: #64748b;
+        color: #475569;
+    }
+
+
+
+
+    .form-panel-title {
+        color: #1e293b;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+    }
+
+    .form-panel-subtitle {
+        color: #64748b;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 1.2rem;
+    }
+
+    .form-panel-card {
+        background: #ffffff;
+        border: 0;
+        border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+
+    .form-panel-card .form-label {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #334155;
+    }
+
+    .form-panel-card .form-control,
+    .form-panel-card .form-select {
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        background-color: #ffffff;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-panel-card .form-control:focus,
+    .form-panel-card .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.18);
+        background-color: #ffffff;
+    }
+
+    .btn-secondary-soft {
+        background: transparent;
+        border: 1px solid transparent;
+        color: #64748b;
+        border-radius: 12px;
+        padding: 0.55rem 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .btn-secondary-soft:hover {
+        background: #f8fafc;
+        color: #475569;
+    }
+    .moradores-table {
+        margin-bottom: 0;
+    }
+
+    .moradores-table th,
+    .moradores-table td {
+        padding: 0.95rem 0.85rem;
+        vertical-align: middle;
+    }
+
+    .morador-nome {
+        margin: 0;
+        color: #1e293b;
+        font-weight: 600;
+    }
+
+    .tipo-pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.32rem 0.78rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1;
+        border: 1px solid transparent;
+    }
+
+    .tipo-pill-sindico {
+        background: #e8f1ff;
+        color: #1e3a8a;
+        border-color: #c8dbff;
+    }
+
+    .tipo-pill-morador {
+        background: #eef2f7;
+        color: #475569;
+        border-color: #d9e1ec;
     }
 
     .main-panel {
         flex: 1;
         padding: 30px 34px;
+    }
+
+
+    .summary-card {
+        border: 0;
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 12px 28px rgba(25, 38, 75, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 30px rgba(25, 38, 75, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    .summary-card .card-body {
+        padding: 1.6rem 1.5rem;
+    }
+
+    .summary-card-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        text-align: left;
+    }
+
+    .summary-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.35rem;
+        color: #3a4a6b;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,0.6);
+    }
+
+    .summary-icon-all { background: #eef3ff; }
+    .summary-icon-pending { background: #fff8e8; }
+    .summary-icon-progress { background: #eaf7ff; }
+    .summary-icon-done { background: #eaf9f1; }
+
+    .summary-card-title {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2d3142;
+    }
+
+    .summary-card-value {
+        margin: 0.2rem 0 0;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #131620;
+        line-height: 1.1;
+    }
+
+
+    .ocorrencia-title-cell {
+        line-height: 1.3;
+    }
+
+    .ocorrencia-title-main {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #151a27;
+        text-transform: none;
+        letter-spacing: normal;
+    }
+
+    .ocorrencia-title-sub {
+        display: block;
+        margin-top: 0.2rem;
+        font-size: 0.86rem;
+        font-weight: 400;
+        color: #7b8497;
+    }
+
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.35rem 0.8rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1;
+        border: 1px solid transparent;
+    }
+
+    .status-badge-pendente {
+        background: #fff7db;
+        color: #9a6a00;
+        border-color: #f3e2a9;
+    }
+
+    .status-badge-andamento {
+        background: #e8f5ff;
+        color: #0b5f8f;
+        border-color: #cbe6f8;
+    }
+
+    .status-badge-resolvido {
+        background: #e8f8ef;
+        color: #1f7a46;
+        border-color: #cdebd9;
+    }
+
+
+    .admin-action-cell {
+        min-width: 190px;
+    }
+
+    .admin-action-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        min-width: 142px;
+        padding: 0.42rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: filter 0.15s ease, transform 0.15s ease;
+    }
+
+    .admin-action-btn i {
+        font-size: 0.9rem;
+    }
+
+    .admin-action-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(0.97);
+    }
+
+    .admin-action-progress {
+        background: #e8f5ff;
+        color: #0b5f8f;
+        border-color: #cbe6f8;
+    }
+
+    .admin-action-resolve {
+        background: #e8f8ef;
+        color: #1f7a46;
+        border-color: #cdebd9;
+    }
+
+    .admin-action-disabled {
+        background: #f0f2f6;
+        color: #8b93a5;
+        border-color: #dde2eb;
+        cursor: not-allowed;
+        pointer-events: none;
     }
 </style>
 <head>
@@ -106,7 +447,7 @@
 </head>
 <body class="bg-light">
 
-{% if request.endpoint == 'dashboard.dashboard' %}
+{% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios', 'ocorrencias.nova_ocorrencia', 'usuarios.cadastro'] %}
     <header class="conecta-topbar d-flex align-items-center justify-content-between px-4 px-lg-5">
         <a class="d-flex align-items-center text-decoration-none text-dark" href="{{ url_for('dashboard.dashboard') }}">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="46" class="me-3">
@@ -115,7 +456,7 @@
                 <span style="font-size:2.05rem; font-weight:400;"> - Plataforma para Gestão de Condomínio</span>
             </div>
         </a>
-        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger px-4 py-2 rounded-3">Sair</a>
+        <a href="{{ url_for('auth.logout') }}" class="topbar-logout" aria-label="Sair da conta"><i class="bi bi-box-arrow-right"></i><span>Sair</span></a>
     </header>
 
     {% block full_content %}{% endblock %}

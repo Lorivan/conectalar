@@ -1,45 +1,85 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="row mt-4">
-    <div class="col-md-8">
-        <h2>Gestão de Moradores</h2>
-        <p class="text-muted">Lista de todos os usuários cadastrados no sistema.</p>
-    </div>
-    <div class="col-md-4 text-end">
-        <a href="{{ url_for('usuarios.cadastro') }}" class="btn btn-roxo-conecta text-nowrap">+ Novo Morador</a>
-        <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-outline-primary ms-2">Voltar</a>
-    </div>
-</div>
+{% block full_content %}
+<div class="layout-shell">
+    <aside class="conecta-sidebar">
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+            <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
 
-<hr>
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}">
+            <i class="bi bi-dot" style="font-size:1.4rem;"></i>
+            <span>Painel de Ocorrências</span>
+        </a>
 
-<div class="card shadow-sm">
-    <div class="card-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>E-mail (Login)</th>
-                    <th>Unidade</th>
-                    <th>Tipo</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for usuario in usuarios %}
-                <tr>
-                    <td>{{ usuario.nome }}</td>
-                    <td>{{ usuario.email }}</td>
-                    <td>{{ usuario.unidade }}</td>
-                    <td>
-                        <span class="badge {{ 'bg-dark' if usuario.tipo == 'sindico' else 'bg-secondary' }}">
-                            {{ usuario.tipo.capitalize() }}
-                        </span>
-                    </td>
-                </tr>
+        <h5 class="sidebar-group-title">Cadastros</h5>
+        {% if session.get('usuario_tipo') == 'sindico' %}
+            <a class="sidebar-item" href="{{ url_for('usuarios.cadastro') }}"><i class="bi bi-person-plus"></i> + Novo Morador</a>
+            <a class="sidebar-item" href="{{ url_for('ocorrencias.nova_ocorrencia') }}"><i class="bi bi-file-earmark-plus"></i> + Nova Ocorrência</a>
+        {% endif %}
+
+        <h5 class="sidebar-group-title">Consultas</h5>
+        {% if session.get('usuario_tipo') == 'sindico' %}
+            <a class="sidebar-card-muted" href="{{ url_for('usuarios.lista_usuarios') }}"><i class="bi bi-list-ul"></i> Ver Lista de Moradores</a>
+        {% endif %}
+        <a class="sidebar-item" href="{{ url_for('dashboard.dashboard') }}"><i class="bi bi-list-check"></i> Lista de Ocorrências</a>
+    </aside>
+
+    <main class="main-panel">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <h2 class="page-title" style="font-size:2.35rem;">Gestão de Moradores</h2>
+                <p class="section-subtitle">Lista de todos os usuários cadastrados no sistema.</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <a href="{{ url_for('usuarios.cadastro') }}" class="btn-primary-conecta text-nowrap">+ Novo Morador</a>
+                <a href="{{ url_for('dashboard.dashboard') }}" class="btn-secondary-ghost ms-2"><i class="bi bi-arrow-left"></i> Voltar</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover moradores-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail (Login)</th>
+                            <th>Unidade</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td><p class="morador-nome">{{ usuario.nome|lower|title }}</p></td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.unidade }}</td>
+                            <td>
+                                <span class="tipo-pill {{ 'tipo-pill-sindico' if usuario.tipo == 'sindico' else 'tipo-pill-morador' }}">
+                                    {{ usuario.tipo.capitalize() }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 </div>
 {% endblock %}
