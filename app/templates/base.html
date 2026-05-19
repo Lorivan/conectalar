@@ -5,6 +5,9 @@
         --conecta-bg: #f4f5f9;
         --conecta-primary: #1f2372;
         --conecta-primary-soft: #2e328d;
+        --sidebar-bg: #0f172a;
+        --sidebar-surface: #1e293b;
+        --sidebar-text: #94a3b8;
     }
 
     body {
@@ -56,9 +59,9 @@
 
     .conecta-sidebar {
         width: 360px;
-        background: #f1f2f8;
-        border-right: 1px solid #d6d8e2;
-        box-shadow: inset -8px 0 16px rgba(0, 0, 0, 0.03);
+        background: var(--sidebar-bg);
+        border-right: 1px solid #1f2937;
+        box-shadow: inset -8px 0 18px rgba(0, 0, 0, 0.28);
         padding: 22px 18px;
     }
 
@@ -71,16 +74,16 @@
         gap: 12px;
         color: #ffffff;
         font-size: 1.05rem;
-        font-weight: 500;
-        background: linear-gradient(140deg, var(--conecta-primary), var(--conecta-primary-soft));
+        font-weight: 600;
+        background: var(--sidebar-surface);
         text-decoration: none;
     }
 
     .sidebar-card-muted {
         border-radius: 14px;
         padding: 14px 18px;
-        background: #e6e8ef;
-        color: #161927;
+        background: rgba(148, 163, 184, 0.12);
+        color: #ffffff;
         font-size: 1.05rem;
         font-weight: 600;
         text-decoration: none;
@@ -91,10 +94,10 @@
 
     .sidebar-group-title {
         margin: 24px 8px 8px;
-        color: #2b2f3f;
+        color: var(--sidebar-text);
         font-weight: 600;
         font-size: 1.9rem;
-        border-top: 1px solid #c6c9d6;
+        border-top: 1px solid rgba(148, 163, 184, 0.24);
         padding-top: 22px;
     }
 
@@ -103,14 +106,27 @@
         align-items: center;
         gap: 14px;
         font-size: 1.05rem;
-        color: #181a24;
+        color: var(--sidebar-text);
         padding: 10px 10px;
         border-radius: 10px;
         text-decoration: none;
     }
 
     .sidebar-item:hover {
-        background: #e5e8f4;
+        background: rgba(148, 163, 184, 0.14);
+    }
+
+
+    .sidebar-card:hover,
+    .sidebar-card-muted:hover,
+    .sidebar-item:hover {
+        color: #ffffff;
+    }
+
+    .page-title {
+        font-weight: 700;
+        font-size: 3.2rem;
+        color: #1e293b;
     }
 
     .main-panel {
