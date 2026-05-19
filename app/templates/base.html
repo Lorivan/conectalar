@@ -127,6 +127,7 @@
         font-weight: 700;
         font-size: 3.2rem;
         color: #1e293b;
+
     }
 
 
@@ -170,7 +171,6 @@
         border-color: #64748b;
         color: #475569;
     }
-
 
 
 
@@ -226,10 +226,6 @@
         gap: 0.35rem;
     }
 
-    .btn-secondary-soft:hover {
-        background: #f8fafc;
-        color: #475569;
-    }
     .moradores-table {
         margin-bottom: 0;
     }
@@ -443,7 +439,10 @@
 </head>
 <body class="bg-light">
 
+
 {% if request.endpoint in ['dashboard.dashboard', 'usuarios.lista_usuarios', 'ocorrencias.nova_ocorrencia'] %}
+
+
     <header class="conecta-topbar d-flex align-items-center justify-content-between px-4 px-lg-5">
         <a class="d-flex align-items-center text-decoration-none text-dark" href="{{ url_for('dashboard.dashboard') }}">
             <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo ConectaLar" height="46" class="me-3">
