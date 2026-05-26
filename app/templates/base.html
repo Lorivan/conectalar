@@ -452,6 +452,7 @@
 
     {% block full_content %}{% endblock %}
 {% else %}
+{% if request.endpoint != 'auth.login' %}
 <nav class="navbar navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard.dashboard') }}">
@@ -461,8 +462,9 @@
         </a>
     </div>
 </nav>
+{% endif %}
 
-<div class="container mt-4">
+<div class="container{% if request.endpoint == 'auth.login' %}-fluid px-0 mt-0{% else %} mt-4{% endif %}">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
