@@ -23,6 +23,37 @@ def test_nova_ocorrencia_valida_persiste_no_banco(client, app, sindico):
         assert ocorrencia.autor.email == 'sindico@conectalar.com'
 
 
+def test_morador_visualiza_atalho_para_nova_ocorrencia_no_dashboard(client, morador):
+    login(client, email='morador@conectalar.com')
+
+    response = client.get('/dashboard')
+
+    assert response.status_code == 200
+    assert b'+ Nova Ocorr' in response.data
+    assert b'/nova-ocorrencia' in response.data
+    assert b'+ Novo Morador' not in response.data
+
+
+def test_morador_registra_ocorrencia(client, app, morador):
+    login(client, email='morador@conectalar.com')
+
+    response = client.post(
+        '/nova-ocorrencia',
+        data={
+            'titulo': 'Vazamento na garagem',
+            'descricao': 'Existe um vazamento constante no piso da garagem.',
+            '_csrf_token': csrf_token(client),
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    with app.app_context():
+        ocorrencia = Ocorrencia.query.filter_by(titulo='Vazamento na garagem').first()
+        assert ocorrencia is not None
+        assert ocorrencia.autor.email == 'morador@conectalar.com'
+
+
 def test_nova_ocorrencia_invalida_nao_persiste(client, app, sindico):
     login(client)
 

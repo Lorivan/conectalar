@@ -17,8 +17,8 @@
         <h5 class="sidebar-group-title">Cadastros</h5>
         {% if session.get('usuario_tipo') == 'sindico' %}
             <a class="sidebar-item" href="{{ url_for('usuarios.cadastro') }}"><i class="bi bi-person-plus"></i> + Novo Morador</a>
-            <a class="sidebar-card-muted" href="{{ url_for('ocorrencias.nova_ocorrencia') }}"><i class="bi bi-file-earmark-plus"></i> + Nova Ocorrência</a>
         {% endif %}
+        <a class="sidebar-card-muted" href="{{ url_for('ocorrencias.nova_ocorrencia') }}"><i class="bi bi-file-earmark-plus"></i> + Nova Ocorrência</a>
 
         <h5 class="sidebar-group-title">Consultas</h5>
         {% if session.get('usuario_tipo') == 'sindico' %}
