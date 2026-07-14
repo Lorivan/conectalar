@@ -1,9 +1,7 @@
 from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
-from sqlalchemy.exc import SQLAlchemyError
 
-from app import db
-from app.models import Ocorrencia
-from app.services.validation_service import STATUS_OCORRENCIA_VALIDOS, validar_ocorrencia_form
+from app.ocorrencias.service import OcorrenciaPersistenceError, OcorrenciaService
+from app.services.validation_service import validar_ocorrencia_form
 from app.utils.auth import login_obrigatorio, sindico_obrigatorio
 
 ocorrencias_bp = Blueprint('ocorrencias', __name__)
@@ -19,19 +17,17 @@ def nova_ocorrencia():
                 flash(erro, 'warning')
             return render_template('nova_ocorrencia.html'), 400
 
-        nova = Ocorrencia(
-            titulo=validacao.dados['titulo'],
-            descricao=validacao.dados['descricao'],
-            usuario_id=session['usuario_id']
-        )
+        service = OcorrenciaService()
 
         try:
-            db.session.add(nova)
-            db.session.commit()
+            service.registrar_ocorrencia(
+                titulo=validacao.dados['titulo'],
+                descricao=validacao.dados['descricao'],
+                usuario_id=session['usuario_id'],
+            )
             flash('Ocorrência registrada com sucesso.', 'success')
             return redirect(url_for('dashboard.dashboard'))
-        except SQLAlchemyError:
-            db.session.rollback()
+        except OcorrenciaPersistenceError:
             current_app.logger.exception('Falha ao registrar ocorrência.')
             flash('Não foi possível registrar a ocorrência. Verifique os dados e tente novamente.', 'danger')
             return render_template('nova_ocorrencia.html'), 500
@@ -42,16 +38,17 @@ def nova_ocorrencia():
 @ocorrencias_bp.route('/atualizar-status/<int:id>/<novo_status>')
 @sindico_obrigatorio
 def atualizar_status(id, novo_status):
-    ocorrencia = Ocorrencia.query.get(id)
+    service = OcorrenciaService()
 
-    if ocorrencia and novo_status in STATUS_OCORRENCIA_VALIDOS:
-        try:
-            ocorrencia.status = novo_status
-            db.session.commit()
+    try:
+        status_atualizado = service.atualizar_status(
+            ocorrencia_id=id,
+            novo_status=novo_status,
+        )
+        if status_atualizado:
             flash('Status updated com sucesso.', 'success')
-        except SQLAlchemyError:
-            db.session.rollback()
-            current_app.logger.exception('Falha ao atualizar status da ocorrência %s.', id)
-            flash('Não foi possível atualizar o status. Tente novamente.', 'danger')
+    except OcorrenciaPersistenceError:
+        current_app.logger.exception('Falha ao atualizar status da ocorrência %s.', id)
+        flash('Não foi possível atualizar o status. Tente novamente.', 'danger')
 
     return redirect(url_for('dashboard.dashboard'))
