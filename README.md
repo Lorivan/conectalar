@@ -22,6 +22,10 @@ O documento descreve:
 - limitações do MVP;
 - escopo recomendado para próximas evoluções.
 
+Para o semestre de **Qualidade de Software**, o planejamento inicial de avaliação do MVP — requisitos de qualidade, métricas, problemas, riscos, testes e sprints — está em:
+
+- [`docs/fase_01_qualidade_software.md`](docs/fase_01_qualidade_software.md)
+
 ---
 
 ## 🚀 Funcionalidades
