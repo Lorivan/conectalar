@@ -25,7 +25,6 @@ O documento descreve:
 Para o semestre de **Qualidade de Software**, o planejamento inicial de avaliação do MVP — requisitos de qualidade, métricas, problemas, riscos, testes e sprints — está em:
 
 - [`docs/fase_01_qualidade_software.md`](docs/fase_01_qualidade_software.md)
-- [`docs/relatorio_fase_01_para_grupo.md`](docs/relatorio_fase_01_para_grupo.md) — versão resumida e pronta para compartilhar com o grupo no Google Docs.
 
 ---
 
