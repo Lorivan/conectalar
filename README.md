@@ -13,6 +13,7 @@ O sistema tem como objetivo **digitalizar e centralizar o registro de ocorrênci
 A documentação completa do Produto Mínimo Viável está disponível em:
 
 - [`docs/mvp.md`](docs/mvp.md)
+- [`docs/primeira_entrega.md`](docs/primeira_entrega.md) — documento-base da primeira entrega, com diagnóstico, requisitos, backlog, arquitetura e planejamento das sprints.
 
 O documento descreve:
 
