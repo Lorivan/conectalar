@@ -217,21 +217,6 @@ erDiagram
     }
 ```
 
-## 10. Repositório do projeto (Git)
-
-**Link do repositório:** **[inserir URL do GitHub/GitLab]**
-
-O repositório local está organizado com o código da aplicação em `app/`, testes
-em `tests/` e documentação em `docs/`. O projeto utiliza Git para registrar a
-evolução do código e desta documentação.
-
-**Captura a anexar:**
-
-- `docs/evidencias/primeira-entrega/03-historico-commits.png` — histórico
-  inicial exibindo o comando `git log --oneline --decorate -10`.
-
-Comando de coleta (executar a partir da raiz do projeto):
-
 ```bash
 git log --oneline --decorate -10
 ```
