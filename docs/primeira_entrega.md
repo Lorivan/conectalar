@@ -4,7 +4,7 @@
 **Instituição de ensino:** UniEvangélica **[confirmar]**
 **Projeto:** ConectaLar — Sistema de Gestão Condominial
 **Instituição parceira:** Condomínio Casas Flamboyant, Anápolis — GO
-**Versão do documento:** 0.1
+**Versão do documento:** 0.2
 **Data:** 13/09/2026
 
 > **Como finalizar antes do envio:** completar somente os campos marcados
@@ -19,6 +19,7 @@
 | Versão | Data | Responsável | Alteração | Evidência |
 | --- | --- | --- | --- | --- |
 | 0.1 | 13/09/2026 | Equipe ConectaLar | Registro inicial da primeira entrega: contexto, demanda, requisitos, arquitetura, backlog e planejamento. | Documento versionado no Git. |
+| 0.2 | 13/09/2026 | Equipe ConectaLar | Inclusão da identificação do repositório e da evidência do commit inicial. | Seção 9 deste documento e histórico Git local. |
 
 As próximas alterações devem acrescentar uma linha nesta tabela e ser
 registradas em commit com uma mensagem que descreva objetivamente a mudança.
@@ -171,7 +172,72 @@ critério de aceite, requisito relacionado e link do commit/evidência.
 Antes de anexar, revise as imagens para ocultar e-mails, telefones, tokens e
 informações pessoais.
 
-## 9. Arquitetura da solução
+## 9. Repositório do Projeto (Git)
+
+O código-fonte, os testes e a documentação do ConectaLar são mantidos em um
+repositório Git. O versionamento permite identificar quem realizou cada
+alteração, recuperar versões anteriores e relacionar as entregas aos itens do
+backlog. Nenhuma credencial, arquivo `.env` real ou dado pessoal deve ser
+enviado ao repositório.
+
+### 9.1 Identificação e Compartilhamento
+
+| Campo | Informação |
+| --- | --- |
+| Nome do repositório | `conectalar` |
+| Sistema de controle de versão | Git |
+| Branch de trabalho registrada nesta entrega | `work` |
+| URL do repositório remoto | **[inserir URL após publicar o repositório]** |
+| Forma de compartilhamento | Conceder acesso ao professor e aos integrantes da equipe pelo provedor Git escolhido; se o repositório for privado, enviar convite ou link com permissão de leitura. |
+| Conteúdo versionado | Código da aplicação, testes, documentação e evidências que não contenham dados sensíveis. |
+
+No momento da elaboração desta versão, o clone local não possui um remoto Git
+configurado. Antes da entrega, a equipe deve publicar o repositório em uma
+plataforma como GitHub, GitLab ou Bitbucket, inserir a URL acima e verificar que
+o professor consegue abrir o histórico e os arquivos. Para conferir a
+configuração e o compartilhamento, executar:
+
+```bash
+git remote -v
+git branch --show-current
+git log --oneline --decorate -10
+```
+
+### 9.2 Histórico de Commits
+
+O histórico do projeto registra a evolução do MVP, incluindo a estrutura
+inicial, as melhorias de organização, testes e documentação. As mensagens de
+commit devem ser objetivas, descrever a alteração entregue e, quando aplicável,
+referenciar o card do backlog ou o requisito atendido. Commits de merge fazem
+parte do histórico de integração e não substituem os commits que implementam a
+alteração.
+
+A consulta do histórico completo pode ser feita com:
+
+```bash
+git log --oneline --decorate --all
+```
+
+#### 9.2.1 Commit Inicial
+
+| Campo | Registro |
+| --- | --- |
+| Hash completo | `d5333f63fc84f6fad5fdfb778b18a4b13a4ee9b3` |
+| Hash abreviado | `d5333f6` |
+| Data | 15/04/2026 |
+| Autor | Lorivan Lino Abreu |
+| Mensagem | `MVP ConectaLar - Versão Funcional Completa` |
+| Conteúdo entregue | Estrutura inicial da aplicação Flask, modelos, rotas, templates, configuração, dependências e script de criação de usuário. |
+
+Esse commit estabelece a linha de base funcional do ConectaLar. A evidência
+pode ser reproduzida no terminal com o comando abaixo, que exibe os metadados e
+os arquivos incluídos na primeira versão:
+
+```bash
+git show --stat --format=fuller d5333f63fc84f6fad5fdfb778b18a4b13a4ee9b3
+```
+
+## 10. Arquitetura da solução
 
 O sistema segue uma arquitetura web em camadas. A aplicação Flask é criada por
 uma *app factory*, distribui as rotas por blueprints de domínio e usa modelos
