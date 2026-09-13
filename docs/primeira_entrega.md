@@ -19,7 +19,6 @@
 | Versão | Data | Responsável | Alteração | Evidência |
 | --- | --- | --- | --- | --- |
 | 0.1 | 13/09/2026 | Equipe ConectaLar | Registro inicial da primeira entrega: contexto, demanda, requisitos, arquitetura, backlog e planejamento. | Documento versionado no Git. |
-| 0.2 | 13/09/2026 | Equipe ConectaLar | Separação explícita entre o repositório do software avaliado e o repositório do trabalho de Qualidade de Software. | Estrutura local inicial do projeto de qualidade e histórico Git correspondente. |
 
 As próximas alterações devem acrescentar uma linha nesta tabela e ser
 registradas em commit com uma mensagem que descreva objetivamente a mudança.
@@ -217,29 +216,6 @@ erDiagram
         int usuario_id FK
     }
 ```
-
-## 10. Repositórios do software e do projeto de qualidade (Git)
-
-Esta entrega usa **dois repositórios com finalidades distintas**. Eles não devem
-ser confundidos:
-
-| Finalidade | Repositório | Uso nesta entrega |
-| --- | --- | --- |
-| Software avaliado | [`Lorivan/conectalar`](https://github.com/Lorivan/conectalar) | Referência do código do ConectaLar que será avaliado. A primeira entrega disponível nesse repositório está em [`docs/primeira_entrega.md`](https://github.com/Lorivan/conectalar/blob/main/docs/primeira_entrega.md). Não é a evidência de evolução do trabalho de Qualidade de Software deste semestre. |
-| Projeto de Qualidade de Software | `Lorivan/conectalar-qualidade` **[publicar no GitHub e inserir URL]** | Registro dos documentos, casos/scripts de teste, dados fictícios, métricas, resultados e evidências técnicas produzidos nas sprints. |
-
-O repositório do projeto de qualidade foi iniciado localmente com a estrutura
-`README.md`, `docs/`, `testes/` e `evidencias/`, e com o commit inicial
-`docs: estrutura inicial do projeto de qualidade`. Antes da entrega, ele deve ser
-publicado em uma organização/conta do grupo no GitHub e o link público ou
-acessível ao professor deve substituir o campo pendente da tabela acima.
-
-**Captura a anexar no repositório de qualidade:**
-
-- `evidencias/03-historico-commit-inicial.png` — histórico inicial exibindo o
-  commit `docs: estrutura inicial do projeto de qualidade`.
-
-Comando de coleta (executar a partir da raiz de `conectalar-qualidade`):
 
 ```bash
 git log --oneline --decorate -10
